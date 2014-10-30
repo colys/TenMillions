@@ -60,7 +60,6 @@ public class LoginActivity extends WSActivity
 		MyApplication mApp = (MyApplication) getApplication();
 		mApp.SetDBPath(dbDirectory,"TenMillion.db");		
 		mAccess =new BasicAccess(this);
-		//check db version
 		String dbVal;
 		try {
 			dbVal = mAccess.Visit(DefaultAccess.class).ExecuteScalar("select Value from Configs where key='database_version'");
