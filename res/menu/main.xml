@@ -1,0 +1,58 @@
+<menu 
+	xmlns:android="http://schemas.android.com/apk/res/android"  
+		>
+
+    
+	<item
+        android:id="@+id/action_task"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_task"/>
+	<item
+        android:id="@+id/action_plan"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_plan"/>
+	
+
+	<item
+        android:id="@+id/action_shen_gou"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_shen_gou"/>
+	
+	<item
+        android:id="@+id/action_train_plan"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_train_plan"/>
+	
+	<item
+        android:id="@+id/action_train_report"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_train_report"/>
+
+    <item
+        android:id="@+id/action_map"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_ViewMap"/>
+
+    <item
+        android:id="@+id/action_sync"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_sync"/>
+	<item
+        android:id="@+id/action_sync_clear"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_sync_off_clear">
+	</item>
+
+	<item
+        android:id="@+id/action_house"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_house"/>
+	
+	<item
+        android:id="@+id/action_options"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_options"/>
+	
+	
+	
+</menu>

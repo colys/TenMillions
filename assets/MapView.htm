@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="jquery/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/jquery.jOrgChart.css" rel="stylesheet" type="text/css" />
+
+    <script src="jquery/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="jquery/jquery.jOrgChart.js" type="text/javascript"></script>
+    <script src="jquery/ui/jquery.ui.core.js"></script>
+	<script src="jquery/ui/jquery.ui.widget.js"></script>
+	<script src="jquery/ui/jquery.ui.tabs.js"></script>	
+    <script src="Scripts/netTree.js" type="text/javascript"></script>
+    <script>
+	  
+	  $(function(){
+		if(window.millions){
+			//alert("get json");
+	    	var str=window.millions.GetJson();
+			//alert("get success : "+ str);
+			InitPageData(str);
+		}else alert("window.millions is null");
+	  });
+
+        function InitPageData(e) {
+            var m_all_members_map = eval(e);
+            if (m_all_members_map) {
+
+                $("#map-full-container").empty().append('<div id="map-data-container"></div><div id="tabs">	<ul></ul></div>');
+                //load map
+                $(m_all_members_map).each(function (i) {
+                    if (this != null && this.CounterMan != null && this.CounterMan.length > 0) {
+                        var index = i + 1;
+                        index += "D";
+                        var tab = $('<li><a href="#tabs-' + index + '">' + this.Name + '</a></li>');
+                        $("#tabs ul").append(tab)
+                        $("#tabs").append('<div id="tabs-' + index + '"><div id="mapDispaly' + index + '"></div> </div>');
+                        var mapUL = $("<ul id='map" + index + "' style='display:none'></ul>");
+                        mapUL.appendTo("#map-data-container");
+                        mapUL.TreeMap({ data: this, element: "#mapDispaly" + index });
+                    }
+                });
+                $("#tabs").tabs();
+            }
+
+            $(".map-item-normal").click(function () {
+                var id = this.getAttribute("mid");
+				//alert(id);
+                window.millions.ViewMember(id);
+                return false;
+            });
+
+            $(".map-item-off").click(function () {
+                var id = this.getAttribute("mid");
+				//alert(id);
+                window.millions.ViewMember(id);
+                return false;
+            });
+
+            
+        }
+
+    </script>
+</head>
+<body>
+<div id="map-full-container"> loading... </div>
+</body>
+</html>

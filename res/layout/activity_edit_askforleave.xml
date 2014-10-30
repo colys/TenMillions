@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+     		<EditText
+                 android:id="@+id/ask_for_leave_edit_member"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="text"  
+				 android:focusableInTouchMode="false"
+                 android:hint="@+string/edit_ask_for_leave_member_label"/>
+           
+             <EditText
+                 android:id="@+id/ask_for_leave_edit_reason"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="text"  
+                 android:hint="@+string/edit_ask_for_leave_reason_label"/>
+           
+               
+             <EditText
+                 android:id="@+id/ask_for_leave_edit_begin_date" 
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:inputType="date"
+                 android:focusableInTouchMode="false"
+                 android:hint="@+string/edit_task_begin_date_label" 
+                 />
+             
+             
+                 
+             <EditText
+                 android:id="@+id/ask_for_leave_edit_end_date" 
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:inputType="date"
+                 android:focusableInTouchMode="false"
+                 android:hint="@+string/edit_task_end_date_label" />
+             
+             <CheckBox android:id="@+id/ask_for_leave_edit_isfinish" 
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:text="@+string/edit_task_is_finish_label"></CheckBox>
+             
+             <Button android:id="@+id/ask_for_leave_edit_save"  android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:layout_marginTop="5dp"
+       			 android:layout_marginLeft="5dp"
+                 android:text="@+string/save_button_text"/>
+</LinearLayout>

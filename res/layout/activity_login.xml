@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:alpha="10"  >
+
+	<LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:layout_centerInParent="true"
+	    android:orientation="vertical" >
+    
+	<RelativeLayout
+		android:layout_height="wrap_content"
+		android:layout_width="300dp" 
+		android:background="@drawable/login_input_area_style">
+
+		<TextView
+			android:layout_height="36dp"
+			android:text="帐 号 :"
+			android:layout_width="80dp"
+			android:id="@+id/activityloginTextView1"
+			android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+		<TextView
+			android:id="@+id/activityloginTextView2"
+			android:layout_height="36dp"
+			android:text="密 码 :"
+			android:layout_width="80dp"
+			android:layout_below="@id/activityloginTextView1"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_alignLeft="@id/activityloginTextView1"/>
+
+		<EditText
+			android:layout_height="wrap_content"
+			android:ems="10"
+			android:singleLine="true"
+			android:layout_toRightOf="@+id/activityloginTextView1"
+			android:layout_width="match_parent"
+			android:id="@+id/login_user_name"/>
+
+		<EditText
+			android:layout_height="wrap_content"
+			android:ems="10"
+			android:singleLine="true"
+			android:layout_width="match_parent"
+			android:layout_below="@id/login_user_name"
+			android:id="@+id/login_user_password"
+			android:inputType="textPassword"
+			android:layout_toRightOf="@+id/activityloginTextView2"/>
+
+	</RelativeLayout>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="Enter"
+		android:layout_width="300dp"
+		android:id="@+id/login_enter_button"
+		android:paddingTop="15dp"
+		android:layout_marginTop="16dp"/>
+
+</LinearLayout>
+
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentBottom="true"
+		    android:orientation="vertical" >
+
+			<TextView
+			    android:id="@+id/login_change_password"
+			    android:layout_width="wrap_content"
+			    android:layout_height="40dp"
+			    android:textColor="@color/solid_blue"
+			    android:textSize="18dp"
+			    android:paddingLeft="5dp"
+			    android:paddingBottom="5dp"
+			    android:text="修改密码" />
+
+		</LinearLayout>
+	
+</RelativeLayout>
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/item_house_working_housename"
+        android:background="@color/solid_hightlight"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:focusable="false"
+        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+     <TextView
+       android:id="@+id/item_house_working_house_member1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:focusable="false"
+       android:singleLine="false"
+       android:layout_below="@+id/item_house_working_housename" 
+       android:layout_marginLeft="10dp" />
+       
+     
+       
+    <TextView
+        android:id="@+id/item_house_working_people_coming_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="false"
+        android:focusable="false"
+        android:layout_alignLeft="@+id/item_house_working_house_member1"
+        android:layout_below="@id/item_house_working_house_member1"/>
+  
+  
+   
+</RelativeLayout>

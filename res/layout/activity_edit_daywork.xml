@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ScrollView1"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<Spinner
+		android:id="@+id/edit_daywork_house"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
+
+	<EditText
+		android:id="@+id/edit_daywork_house_remark"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:hint="写点情况吧！"/>
+
+	<LinearLayout
+		android:id="@+id/edit_daywork_people_working_list"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/edit_daywork_people_working"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:focusable="false"
+			android:singleLine="false"
+			android:text="这里显示新人情况"/>
+
+	</LinearLayout>
+
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="match_parent">
+
+		<ScrollView
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:layout_alignParentBottom="false"
+			android:layout_alignParentTop="true">
+
+			<LinearLayout
+				android:id="@+id/edit_daywork_details"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<Button
+					android:id="@+id/button1"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="吕存库2Z1G2P"/>
+
+			</LinearLayout>
+
+		</ScrollView>
+
+		<RelativeLayout
+			android:layout_width="200dp"
+			android:layout_alignParentRight="true"
+			android:layout_height="match_parent">
+
+			<ListView
+				android:id="@+id/edit_daywork_quick_add_member"
+				android:layout_width="match_parent"
+				android:layout_height="220dp">
+
+			</ListView>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true"
+				android:orientation="vertical">
+
+				<EditText
+					android:id="@+id/edit_daywork_quick_text"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:focusableInTouchMode="false"
+					android:hint="点按钮快速检索!"/>
+
+				<LinearLayout
+				    android:layout_marginBottom="5dp"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<Button
+						android:id="@+id/edit_daywork_quick_button1"
+						android:layout_width="65dp"
+						android:layout_height="wrap_content"
+						android:text="ABC"/>
+
+					<Button
+						android:id="@+id/edit_daywork_quick_button2"
+						android:layout_width="65dp"
+						android:layout_height="wrap_content"
+						android:text="DEF"/>
+
+					<Button
+						android:id="@+id/edit_daywork_quick_button3"
+						android:layout_width="65dp"
+						android:layout_height="wrap_content"
+						android:text="GHI"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+				    android:layout_marginBottom="5dp"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<Button
+						android:id="@+id/edit_daywork_quick_button4"
+						android:layout_width="65dp"
+						android:layout_height="wrap_content"
+						android:text="JKL"/>
+
+					<Button
+						android:id="@+id/edit_daywork_quick_button5"
+						android:layout_width="65dp"
+						android:layout_height="wrap_content"
+						android:text="MNO"/>
+
+					<Button
+						android:id="@+id/edit_daywork_quick_button6"
+						android:layout_width="65dp"
+						android:layout_height="wrap_content"
+						android:text="PQR"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+				    android:layout_marginBottom="5dp"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<Button
+						android:id="@+id/edit_daywork_quick_button7"
+						android:layout_width="65dp"
+						android:layout_height="wrap_content"
+						android:text="STU"/>
+
+					<Button
+						android:id="@+id/edit_daywork_quick_button8"
+						android:layout_width="65dp"
+						android:layout_height="wrap_content"
+						android:text="VWXYZ"/>
+
+					<Button
+						android:id="@+id/edit_daywork_quick_button9"
+						android:layout_width="65dp"
+						android:layout_height="wrap_content"
+						android:text="&lt;--"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+		</RelativeLayout>
+
+		<ImageButton
+			android:id="@+id/edit_daywork_delete"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:src="@drawable/lajitong"
+			android:text="拖动到这里删除"
+			android:visibility="invisible"/>
+
+	</RelativeLayout>
+
+</LinearLayout>
+

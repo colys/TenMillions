@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout 
+       android:layout_marginTop="5dp"
+       android:layout_marginLeft="5dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+       	  <Button android:id="@+id/task_add_button"  
+       	      	android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"                  
+             	 android:layout_marginTop="5dp"
+       			 android:layout_marginLeft="5dp"
+                 android:text="@+string/add_task_button_text"/>
+       	  
+          <Button android:id="@+id/ask_for_leave_add_button"  
+              android:layout_width="wrap_content"
+              android:layout_marginTop="5dp"
+       	android:layout_marginLeft="5dp"
+                 android:layout_height="wrap_content" 
+                 android:text="@+string/add_ask_for_leave_button_text"/>
+    </LinearLayout>
+    
+    <ListView
+         android:id="@+id/task_unfinish_listview"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >
+     </ListView>
+       <ViewStub  android:id="@+id/month_people_coming_listview_empty_1"
+      android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+         android:layout_gravity="center" android:layout="@layout/empty_list_view"
+         />
+   
+</LinearLayout>

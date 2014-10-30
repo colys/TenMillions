@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TenMillion</string>
+    <string name="app_title">TenMillion</string>
+    
+    <string name="action_settings">设置</string>
+    <string name="action_house">房子</string>    
+	<string name="action_options">其它</string>
+	
+    <string name="action_sync">手动同步</string>
+	<string name="action_sync_off_clear">重新下载</string>
+	<string name="action_shen_gou">申购记录</string>
+    <string name="action_ViewMap">查看网络图</string>
+    <string name="action_train_plan">能力安排</string>
+    <string name="action_train_report">能力报表</string>
+    <string name="action_plan">本月计划</string>
+	<string name="action_task">待办事项</string>
+	<string name="action_new_member">新加成员</string>
+	<string name="action_execute_sql">ExecuteSql</string>
+	
+    <string name="action_sync_set_success">您已进入：</string>
+    <string name="action_sync_on">联网模式</string>
+    <string name="title_section1">本月来人</string>
+    <string name="title_section2">每日工作</string>
+    <string name="title_section3">分类信息</string> 
+    
+    <string name="dialog_tip_title">提示</string>
+    <string name="dialog_tip_no_network_use_local">没有任何网络连接，点确定将使用本地数据，点取消退出！</string>
+    <string name="dialog_tip_not_wifi">当前不是wifi网络，确定要继续吗？</string> 
+    <string name="dialog_tip_no_network">您还没有同步过数据，但您的网络连接好像不正常哦？</string>
+    <string name="login_account_not_exists">帐户或者密码错误，或者没有访问权限！</string>
+    <string name="login_update_password_account">账号</string>
+    <string name="login_please_input_old_password">输入原来的密码！</string>
+    <string name="login_update_password_title">修改密码</string>
+    <string name="login_please_input_new_password">输入新的密码！</string>
+    <string name="login_update_password_ok">密码已经修改，你可以使用新密码登录了！</string>
+    <string name="please_choose_a_group">您要进入哪个团队？</string>
+	<string name="prev_day_text">前一天</string>
+	<string name="next_day_text">后一天</string>
+	<string name="recalc_button">重算</string>
+	<!-- peopleComingActivity -->
+	<string name="people_coming_name_label">叫什么名字</string>
+	<string name="people_coming_arrive_date_label">什么时候会到</string>
+	<string name="people_coming_work_date_label">什么时候走工作</string>
+	<string name="people_coming_comefrom_label">是哪里的</string>
+	<string name="people_coming_job_label">做什么的</string>
+	<string name="people_coming_relation_label">跟当事人什么关系</string>
+	<string name="people_coming_remark_label">备注点什么东西吧</string>
+	<string name="people_coming_leave_date_label">什么时候离开的</string>
+	<string name="people_coming_arrive_house_label">在哪套房接</string>
+	<string name="people_coming_daywork_house_label">房子：</string>
+	<string name="people_coming_daywork_is_return">这家伙之前来考察过!</string>
+	<string name="people_coming_daywork_willcoming_button_label">马上就要来啦</string>
+	<string name="people_coming_daywork_iscoming_button_label">人已经来啦</string>
+	<string name="people_coming_daywork_uncoming_button_label">人不来了</string>
+	
+	<string name="people_working_item_day_label">天数：</string>
+	<string name="people_working_item_result_label">今天的情况怎么样？</string>
+	
+	<string name="people_working_goto_coming_button">新人资料</string>
+	<string name="people_working_add_item">添加情况</string>
+	<string name="people_working_button_finish">申购了</string>
+	<string name="people_working_button_leave">走了</string>
+	
+	<!-- general-->
+	<string name="ok_button_text">确定</string>
+	<string name="save_button_text">保存</string>
+	<string name="update_button_text">修改</string>
+	<string name="delete_button_text">删除</string>
+	<string name="cancel_button_text">取消</string>
+	<string name="add_button_text">添加</string>
+	<string name="prev_month_text">上个月</string>
+	<string name="next_month_text">下个月</string>
+	<string name="please_choose_member">请选择家人姓名!</string> 
+	
+	
+	<string name="search_date_start_text">起始日期</string>
+	<string name="search_date_end_text">结束日期</string>
+	
+	<string name="people_will_coming_button_text">要来新人</string>
+	
+	<!-- day works -->
+	<string name="day_work_pop_member_zhengban">正</string>
+	<string name="day_work_pop_member_gengjin">跟</string>
+	<string name="day_work_pop_member_baifang">拜</string>
+	<string name="day_work_pop_member_daigz">带</string>
+	<string name="day_work_pop_member_peixun">培</string>
+	<string name="day_work_pop_member_pudian">铺</string>
+	<string name="day_work_pop_select_house_title">这家伙搬到哪啦？</string>
+	<string name="update_finish_message">修改成功！</string>
+	<string name="add_finish_message">添加成功！</string>
+	<!-- coming -->
+	<string name="please_choose_arrive_date_message">新人什么时候会来啊？</string>
+	<string name="please_choose_work_date_message">新人是什么时候开始走工作的啊？</string>
+	<string name="please_choose_leave_date_message">新人是什么时候离开（申购）的啊？</string>
+	<string name="please_choose_house_message">新人是什么时候离开（申购）的啊？</string>
+	<string name="please_input_relation">新人是什么关系啊？</string>
+	<string name="how_much_sg_fen_e_message_title">新人申购了多少份啊？</string>
+	
+	<string name="please_choose_memeber_will_coming">是谁要来人啊？</string>
+	
+	
+	
+	<!-- emptyview -->
+	<string name="empty_view_label"> ^_^ 亲,好像没有什么可显示的哦! </string>
+	
+	<!-- task -->
+	<string name="add_task_button_text">添加待办事项</string>
+	<string name="add_ask_for_leave_button_text">有人请假</string>
+	
+	<string name="please_input_task_content">请输入待办的内容!</string>
+	<string name="please_choose_task_date_message">请选择日期范围!</string>
+	<string name="edit_task_begin_date_label">什么时候开始？</string>
+	<string name="edit_task_end_date_label">什么时候结束？</string>
+	<string name="edit_task_Text_label">你要记录些什么？</string>
+	<string name="edit_task_is_finish_label">标记我为完成！</string>
+	
+	<!-- ask for leave -->
+	<string name="edit_ask_for_leave_member_label">点我选择一个成员</string>
+	<string name="edit_ask_for_leave_reason_label">请假的原因是什么？</string>
+	
+	<!-- shen gou  -->
+	<string name ="search_button">查询</string>
+	<string name="edit_shen_gou_member_label">谁要申购/补份啊</string>
+	<string name="shen_gou_edit_apply_date_label">是什么时候办的</string>
+	<string name="shen_gou_edit_fen_e_label">多少份？</string>
+	<string name="shen_gou_edit_is_patch_label">补份额</string>
+	<string name="shen_gou_edit_add_button_label">添加</string>
+	
+	<!-- member -->
+	<string name="edit_member_name">叫什么名字</string>	
+	<string name="edit_member_pinyin">拼音首字母</string>	
+	
+	<string name="edit_member_join_date">什么时候加入的</string>
+	<string name="edit_member_xvalue">现在多少份</string>
+	<string name="edit_member_refrence_name">点击我选择推荐人</string>
+	<string name="edit_member_button_set_offline">这家伙虚了</string>
+	<string name="edit_member_button_set_online">这家伙回来了</string>
+	<string name="edit_member_szk">素质课几次</string>
+	<string name="edit_member_whk">文化课几次</string>
+	<!-- monthplan -->
+		
+</resources>

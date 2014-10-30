@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:layout_width="wrap_content"
+		android:hint="@+string/edit_member_name"
+		android:id="@+id/edit_member_name"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:layout_width="wrap_content"
+		android:hint="@+string/edit_member_pinyin"
+		android:id="@+id/edit_member_pinyin"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:layout_width="wrap_content"
+		android:focusableInTouchMode="false"
+		android:hint="@+string/edit_member_refrence_name"
+		android:id="@+id/edit_member_refrence_name"/>
+
+	<Spinner
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:id="@+id/edit_member_jiang_ban"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:layout_width="wrap_content"
+		android:hint="@+string/edit_member_xvalue"
+		android:id="@+id/edit_member_xvalue"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:layout_width="wrap_content"
+		android:hint="@+string/edit_member_szk"
+		android:id="@+id/edit_member_szk"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:layout_width="wrap_content"
+		android:hint="@+string/edit_member_whk"
+		android:id="@+id/edit_member_whk"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:layout_width="wrap_content"
+		android:focusableInTouchMode="false"
+		android:hint="@+string/edit_member_join_date"
+		android:id="@+id/edit_member_join_date"/>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+
+		<Button
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="5dp"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:id="@+id/edit_member_save_button"
+			android:text="@+string/save_button_text"/>
+
+		<Button
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="5dp"
+			android:layout_height="wrap_content"
+			android:text="@+string/edit_member_button_set_offline"
+			android:id="@+id/edit_member_set_status_button"
+			android:layout_width="wrap_content"/>
+
+		<Button
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="5dp"
+			android:layout_height="wrap_content"
+			android:text="@+string/delete_button_text"
+			android:id="@+id/edit_member_delete_button"
+			android:layout_width="wrap_content"/>
+
+		<Button
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="5dp"
+			android:layout_height="wrap_content"
+			android:text="Switch Group"
+			android:id="@+id/edit_member_switch_group_button"
+			android:layout_width="wrap_content"/>
+		
+		<Button
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="5dp"
+			android:layout_height="wrap_content"
+			android:text="be along"
+			android:id="@+id/edit_member_bealong_button"
+			android:layout_width="wrap_content"/>
+		
+	</LinearLayout>
+
+</LinearLayout>
+

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <!--<Button
+        	
+             android:id="@+id/people_will_coming_button"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@+string/people_will_coming_button_text" 
+             android:layout_marginTop="5dp"
+             android:layout_marginLeft="5dp" />
+		 -->
+	<LinearLayout	 android:layout_width="wrap_content"
+    android:layout_height="wrap_content"  >
+
+    <TextView
+        android:id="@+id/month_people_coming_query_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textAlignment="center" />
+
+    <Button
+        android:layout_marginTop="5dp"
+       	android:layout_marginLeft="5dp"
+       	
+        android:id="@+id/month_people_coming_prev_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@+string/prev_month_text" />
+
+    <Button
+        android:layout_marginTop="5dp"
+       	android:layout_marginLeft="5dp"
+       	
+        android:id="@+id/month_people_coming_next_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@+string/next_month_text" />
+    </LinearLayout>
+    <ListView
+         android:id="@+id/month_people_coming_listview"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >
+     </ListView>
+     <ViewStub  android:id="@+id/month_people_coming_listview_empty"
+      android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+         android:layout_gravity="center" android:layout="@layout/empty_list_view"
+         />
+</LinearLayout>

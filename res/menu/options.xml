@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item
+        android:id="@+id/action_new_task"
+        android:title="新建记事"/>
+	<item
+        android:id="@+id/action_new_ask_for_leave"
+        android:title="有人请假"/>
+	<item
+        android:id="@+id/action_new_people_coming"
+        android:title="要来新人"/>
+
+    <item
+        android:id="@+id/action_new_member"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_new_member"/>
+	
+	<item
+        android:id="@+id/action_execute_sql"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_execute_sql"/>
+</menu>

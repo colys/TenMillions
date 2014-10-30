@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+
+	android:padding="16dp"
+	android:background="@drawable/member_work_bg">
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+
+		<Spinner
+			android:spinnerMode="dialog"
+			android:id="@+id/day_work_pop_zhengban"
+			android:layout_width="68dp"
+			android:layout_height="wrap_content">
+
+		</Spinner>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@+string/day_work_pop_member_zhengban"/>
+
+		<Spinner
+			android:spinnerMode="dialog"
+			android:id="@+id/day_work_pop_gengjin"
+			android:layout_width="68dp"
+			android:layout_height="wrap_content"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@+string/day_work_pop_member_gengjin"/>
+
+		<Spinner
+			android:spinnerMode="dialog"
+			android:id="@+id/day_work_pop_baifang"
+			android:layout_width="68dp"
+			android:layout_height="wrap_content"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@+string/day_work_pop_member_baifang"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<Spinner
+			android:spinnerMode="dialog"
+			android:id="@+id/day_work_pop_daigz"
+			android:layout_width="68dp"
+			android:layout_height="wrap_content"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@+string/day_work_pop_member_daigz"/>
+
+		<Spinner
+			android:spinnerMode="dialog"
+			android:id="@+id/day_work_pop_pudian"
+			android:layout_width="68dp"
+			android:layout_height="wrap_content"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@+string/day_work_pop_member_pudian"/>
+
+		<Spinner
+			android:spinnerMode="dialog"
+			android:id="@+id/day_work_pop_peixun"
+			android:layout_width="68dp"
+			android:layout_height="wrap_content"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@+string/day_work_pop_member_peixun"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<EditText
+			android:id="@+id/day_work_pop_remark"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@+string/people_coming_remark_label"/>
+
+	</LinearLayout>
+
+</LinearLayout>
+

@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>report</title>
+    <script src="jquery/jquery-1.9.1.js" type="text/javascript"></script>
+      <script>
+     $(function(){
+		if(window.millions){
+			//alert("get json");
+	    	var str=window.millions.GetJson();
+			//alert("get success : "+ str);
+			InitPageData(str);
+		}else alert("window.millions is null");
+	  });
+        function InitPageData(e) {
+        	var m_all_members = eval(e);
+        	var tbody = $("#report_table tbody");
+        	for(var i =0;i<m_all_members.length;i++){
+        		var reportItem = m_all_members[i];
+        		var rowStr ="<tr><td>"+ reportItem.MemberName ;
+        		rowStr+="<td>";
+        		if(reportItem.SuZhiKe > 0) rowStr+=reportItem.SuZhiKe;
+        		rowStr+="</td><td>";
+        		if(reportItem.WenHuaKe > 0) rowStr+=reportItem.WenHuaKe;
+        		rowStr+="</td><td>";
+        		if(reportItem.Item1) rowStr+="√";
+        		rowStr+="</td><td>";
+        		if(reportItem.Item2) rowStr+="√";
+        		rowStr+="</td><td>";
+        		if(reportItem.Item10) rowStr+="√";
+        		rowStr+="</td><td>";
+        		if(reportItem.Item11) rowStr+="√";
+        		rowStr+="</td><td>";
+        		if(reportItem.Item3) rowStr+="√";
+				rowStr+="</td><td>";
+        		if(reportItem.Item4) rowStr+="√";
+        		rowStr+="</td><td>";
+        		if(reportItem.Item5) rowStr+="√";
+        		rowStr+="</td><td>";
+        		if(reportItem.Item6) rowStr+="√";
+        		rowStr+="</td><td>";
+        		if(reportItem.Item9) rowStr+="√";
+        		rowStr+="</td><td>";
+        		if(reportItem.Item7) rowStr+="√";
+        		rowStr+="</td><td>";
+        		if(reportItem.Item8) rowStr+="√";
+        		rowStr+="</td></tr>";
+        		tbody.append(rowStr);
+        	}
+        	
+        	$("table tr:even").addClass("evenBackground");
+        	
+        }
+    </script>
+          
+<style>
+    table
+    {
+        border-collapse: collapse;
+        border: 1px solid #000000;
+        width: 100%;
+    }
+    table thead tr
+    {
+        font-weight: bold;
+        
+    }
+    table td
+    {
+        border: 1px solid #000000;
+    }
+    .evenBackground{
+    	background: #cccccc;
+    }
+    </style>
+ </head>
+ <body> 
+<table id="report_table">
+<thead>
+<tr>
+<td>姓名</td>
+<td>素质</td>
+<td>文化</td>
+<td>宏调</td>
+<td>礼仪</td>
+<td>启动</td>
+<td>误区</td>
+<td>配带</td>
+<td>揭开</td>
+<td>规划图</td>
+<td>铺邀</td>
+<td>复制</td>
+<td>十字</td>
+<td>全跟</td>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</body>
+</html>
+</table>
+</body>
+</html>

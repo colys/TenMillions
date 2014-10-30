@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   
+    <!--定义文字颜色-->
+    <color name="solid_red">#f00</color>
+    <color name="solid_blue">#0000ff</color>
+    <color name="solid_green">#f0f0</color>
+    <color name="solid_hightlight">#cec398</color>
+    
+    <color name="drag_enter">#CCCCCC</color>
+	<color name="drag_exited">#FFFFFF</color>
+	
+	<drawable name="pop_dialog_bg">#CCCCCC</drawable>
+	<drawable name="loading_dialog_bg">#FFFFFF</drawable>
+	<drawable name="button_light_blue">#79afdb</drawable>
+	
+</resources>

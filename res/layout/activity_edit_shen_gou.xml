@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+     		<EditText
+                 android:id="@+id/shen_gou_edit_member"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="text"  
+                 android:hint="@+string/edit_shen_gou_member_label"/>           
+              
+           
+               
+             <EditText
+                 android:id="@+id/shen_gou_edit_apply_date" 
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:inputType="date"
+                 android:focusableInTouchMode="false"
+                 android:hint="@+string/shen_gou_edit_apply_date_label" 
+                 />
+             
+             
+                 
+             <EditText
+                 android:id="@+id/shen_gou_edit_fen_e" 
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:inputType="number" 
+                 android:hint="@+string/shen_gou_edit_fen_e_label" />
+             
+             <CheckBox android:id="@+id/shen_gou_edit_is_patch" 
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:text="@+string/shen_gou_edit_is_patch_label"></CheckBox>
+             
+             <Button android:id="@+id/shen_gou_edit_save"  android:layout_width="match_parent"
+                 android:layout_height="wrap_content" 
+                 android:layout_marginTop="5dp"
+       			 android:layout_marginLeft="5dp"
+                 android:text="@+string/save_button_text"/>
+</LinearLayout>
