@@ -23,7 +23,7 @@ public class DayWorkFragment extends TabViewFragment
 {
 	public DayWorkFragment()
 	{
-		//this is aide
+		//this is  
 	}
 
 	Date queryDate,lastQueyDate;
