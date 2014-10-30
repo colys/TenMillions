@@ -92,7 +92,6 @@ public abstract class TabViewFragment extends Fragment {
 	public void onCreateView(View rootView) {
 		
 	}
-	
 	 
 	MyApplication mMyApplication=null;
 	
@@ -120,7 +119,6 @@ public abstract class TabViewFragment extends Fragment {
 		
 	public Handler GetMessageHandler(){ return handler;}
 	
-	//锟斤拷锟斤拷锟揭伙拷锟斤拷锟绞撅拷锟斤拷录锟�
 	public void FirstShow(){
 		isFirstShow = false;
 	}
