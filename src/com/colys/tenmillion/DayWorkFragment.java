@@ -19,7 +19,6 @@ import com.colys.tenmillion.Entity.*;
 import java.text.*;
 import java.util.*;
 
-
 public class DayWorkFragment extends TabViewFragment
 {
 	public DayWorkFragment()
