@@ -104,6 +104,7 @@ public abstract class TabViewFragment extends Fragment {
 		return getApp().getCurrentGroupID();
 	}
 		
+	
 		
 	protected abstract int getLayout();
 		
