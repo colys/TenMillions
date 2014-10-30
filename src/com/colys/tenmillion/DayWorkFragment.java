@@ -13,17 +13,15 @@ import android.util.*;
 import android.view.*;
 import android.view.ContextMenu.*;
 import android.widget.*;
-
 import com.colys.tenmillion.Entity.*;
-
 import java.text.*;
 import java.util.*;
 
+@SuppressLint("ValidFragment")
 public class DayWorkFragment extends TabViewFragment
-{
-	public DayWorkFragment()
-	{
-		//this is  
+{ 	
+	public DayWorkFragment(WSView ws,Handler handler) {
+		super(ws, handler); 
 	}
 
 	Date queryDate,lastQueyDate;
@@ -185,7 +183,8 @@ public class DayWorkFragment extends TabViewFragment
 		b.putString("houseID", h);
 		intent.putExtras(b);
 		startActivityForResult(intent,QuickEditWork);
-	}
+	}	
+
 
 	@Override
 	public void FirstShow()
@@ -433,8 +432,7 @@ public class DayWorkFragment extends TabViewFragment
 			//if (!hdw.HouseID.equals(House.Empty_House_Guid )) houseList.add(hdw.House);
 			if (hdw.Works != null && hdw.Works.size() > 0) needInit = false;
 			else houseWorkList.remove(i);
-		}
-		if(m_inSyncProc) needInit = false;
+		}		
 		if ( needInit && getApp().getCurrentUser().InitDayWorks)
 		{
 				new AlertDialog.Builder(getActivity()).setTitle("确认")  

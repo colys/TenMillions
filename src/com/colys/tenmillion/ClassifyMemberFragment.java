@@ -2,15 +2,25 @@ package com.colys.tenmillion;
 
 import CustomViews.*;
 import DataAccess.*;
+import android.annotation.SuppressLint;
 import android.database.sqlite.*;
 import android.os.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+
 import com.colys.tenmillion.Entity.*;
+
 import java.util.*;
 
+@SuppressLint("ValidFragment")
 public class ClassifyMemberFragment extends TabViewFragment {
+
+	 
+
+	public ClassifyMemberFragment(WSView ws, Handler h) {
+		super(ws, h); 
+	}
 
 	private ListView listview;
 	LinkedList<Member> memberList;

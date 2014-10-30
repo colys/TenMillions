@@ -179,6 +179,7 @@ public class TaskActivity extends WSActivity {
 					 QueryAskForLeave();
 					 break;
 			 }
+			 setResult(resultCode);
 		 }
 		 
 	}

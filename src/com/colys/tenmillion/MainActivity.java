@@ -2,11 +2,13 @@ package com.colys.tenmillion;
 
 import CustomViews.*;
 import DataAccess.*;
+import android.annotation.SuppressLint;
 import android.app.*;
 import android.content.*;
 import android.content.res.*;
 import android.database.Cursor;
 import android.database.sqlite.*;
+import android.net.Uri;
 import android.os.*;
 import android.support.v4.app.*;
 import android.support.v4.view.*;
@@ -27,27 +29,17 @@ import android.support.v4.app.FragmentManager;
 
 public class MainActivity extends FragmentActivity implements OnMenuItemClickListener
 {
-
-	/**
-	 * The {@link android.support.v4.view.PagerAdapter} that will provide
-	 * fragments for each of the sections. We use a
-	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
-	 * will keep every loaded fragment in memory. If this becomes too memory
-	 * intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-	 */
+	String m ="1";
+	
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
 	ViewPager mViewPager;
 
-	Fragment dayWorkFragment = new DayWorkFragment();
+	Fragment dayWorkFragment ;
 
-	Fragment classifyMemberActivity = new ClassifyMemberFragment();
+	Fragment classifyMemberActivity;
 
-	MonthPeopleComingFragment monthPeopleComingFragment =new MonthPeopleComingFragment();
+	MonthPeopleComingFragment monthPeopleComingFragment;
 
 	static String directory;
 
@@ -60,46 +52,42 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	Button btnMenu,btnMenuAdd;
 
 	boolean startDelayed = false;
+	
+	WSView ws = new WSView();
+	
+	MyApplication mApp ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);		
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);// �������
+		
+		dayWorkFragment = new DayWorkFragment(ws,handler);
+		classifyMemberActivity = new ClassifyMemberFragment(ws,handler);
+		monthPeopleComingFragment =new MonthPeopleComingFragment(ws,handler);
+		m_Access = new BasicAccess(getApplicationContext());
+		mApp = (MyApplication) getApplication();
+
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_main);		
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);//titlebar为自己标题栏的布局
-		
-		MyApplication mMyApplication = (MyApplication) getApplication();
-		if(mMyApplication.getCurrentUser() == null){			 
-			GotoActivity(LoginActivity.class); 
-			return;
-		}
 			btnMenu = (Button) findViewById(R.id.titlebar_menu);
 			btnMenuAdd = (Button) findViewById(R.id.titlebar_add);
 			InitMenu();
 			MainActivity.InitConnectivity(getApplicationContext());
 			btnMenu.setOnClickListener(new View.OnClickListener(){
-
 					@Override
 					public void onClick(View p1)
 					{
 						popup.show();
-
 					}
-
-
 				});	
 			btnMenuAdd.setOnClickListener(new View.OnClickListener(){
-
 					@Override
 					public void onClick(View p1)
 					{
 						openOptionsMenu();
-
 					}
-
-
 				});	
 			String sdcard = Utility.GetSDCardPath();
 			if (sdcard == null)
@@ -109,10 +97,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 			else
 			{
 				directory = sdcard + "/.tenMillion/";
-
-
 			}
-
 
 			mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 			mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -125,56 +110,43 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 					@Override
 					public void onPageScrollStateChanged(int arg0)
 					{
-
-
+						
 					}
 
 					@Override
 					public void onPageScrolled(int arg0, float arg1, int arg2)
-					{					
-//						if (lastArg0 == arg0) return;					
-//						lastArg0 = arg0;
-//						Fragment f= mSectionsPagerAdapter.getItem(arg0);
-//						if(!f.isVisible() || f.isHidden() || !f.isAdded()) return;
-//						//Log.i("tip", "tab is " + f.getClass().getName());
-//						tabViewFragment = (TabViewFragment)f;	
-//						if (tabViewFragment.isFirstShow)
-//						{
-//							Log.i("tip", "run firstShow method");
-//							if (Utility.UseLocal || ConnectivityReceiver.hasConnection())
-//							{				 
-//								tabViewFragment.FirstShow();
-//								tabViewFragment.isFirstShow = false;
-	//
-//							}
-////							if (!startDelayed)
-////							{
-////								StartSyncTimer(true);
-////								startDelayed = true;
-////							}
-//						}
+					{							
+						if (lastArg0 == arg0) return;					
+						lastArg0 = arg0;
+						Fragment f= mSectionsPagerAdapter.getItem(arg0);
+						tabViewFragment = (TabViewFragment)f;
+						if(pageArr[1] != f){
+							tabViewFragment.FirstShow();
+						}
+						pageArr[1] = pageArr[0];
+						pageArr[0] = f;
+						
 					}
 
 					@Override
 					public void onPageSelected(int arg0)
 					{
+						
 					}
 
 				});
-
-//			if (directory == null) canUseLocal = false;
-//			else
-//			{
-//				if (!ConnectivityReceiver.hasConnection())
-//				{
-//					File dbFile = GetDBFile();
-//					if (!dbFile.exists())	canUseLocal = false;	
-//					DoWhereNoNetwork();
-	//
-//				}
-//			}
-			StartSyncTimer(true);
-		
+			 
+			
+			
+	}
+	
+	static Fragment[] pageArr =new Fragment[2];
+	
+	public static void RefreshData(){
+		for(int i=0;i<pageArr.length;i++ ){
+			if(pageArr[i]!=null)
+				((TabViewFragment)pageArr[i]).FirstShow();
+		}
 	}
 
 	public static void InitConnectivity(Context context)
@@ -198,7 +170,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 					{
 						if (tabViewFragment == null) return;
 						//tabViewFragment.GetMessageHandler().removeCallbacks(runnable);
-						StartSyncTimer(true);
+						((MainActivity) tabViewFragment.getActivity()).StartSyncTimer(true);
 						//Toast toast = Toast.makeText(MainActivity.this , "网络已经连接，您可以继续使用本地数据，也可点击菜单的联网模式！", Toast.LENGTH_SHORT); 
 						//toast.show();
 					}
@@ -206,18 +178,19 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 
 		}
 	}
+	 
 
 	@Override
 	public void onResume()
 	{
-		super.onResume();
-		MyApplication mApp = (MyApplication) getApplication();
+		super.onResume();		
 		if(mApp.getCurrentUser() == null || mApp.getCurrentUser().ID ==0){
 			GotoActivity(LoginActivity.class);
-			return;
-		}		
+		}else{
+			StartSyncTimer(true);
+		}
 		if (connectivityReceiver != null) connectivityReceiver.bind();
-		StartSyncTimer(true);
+		
 	}
 
 	@Override
@@ -228,63 +201,18 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 //			tabViewFragment.GetMessageHandler().removeCallbacks(runnable);  
 //		}
 		super.onPause();
+		
 	}
 	boolean isNoNetworkShow=false;
-
-
-
-	/*
-	 private void DoWhereNoNetwork()
-	 {
-	 Log.i("tip", "network not connect");
-	 if (isNoNetworkShow) return;
-	 if (!canUseLocal)
-	 {	
-	 new AlertDialog.Builder(MainActivity.this)      
-	 .setTitle(R.string.dialog_tip_title)   
-	 .setMessage(R.string.dialog_tip_no_network)    
-	 .setPositiveButton(R.string.ok_button_text, new DialogInterface.OnClickListener() {
-
-	 @Override
-	 public void onClick(DialogInterface arg0, int arg1)
-	 {
-	 finish();					
-	 }
-	 })
-	 .show(); 
-
-	 }
-	 else
-	 {
-	 new AlertDialog.Builder(MainActivity.this)      
-	 .setTitle(R.string.dialog_tip_title)    
-	 .setMessage(R.string.dialog_tip_no_network_use_local)    
-	 .setPositiveButton(R.string.ok_button_text, new DialogInterface.OnClickListener() {						
-	 @Override
-	 public void onClick(DialogInterface dialog, int which)
-	 {
-	 isNoNetworkShow = false;
-	 ToDoOffline(false);
-	 }
-	 })  
-	 .setNegativeButton(R.string.cancel_button_text, new DialogInterface.OnClickListener() {
-	 @Override
-	 public void onClick(DialogInterface arg0, int arg1)
-	 {
-	 finish();
-	 }	
-	 }).show(); 
-	 }
-	 isNoNetworkShow = true;
-	 }
-	 */
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		if (resultCode == android.app.Activity.RESULT_OK)
 		{
-			tabViewFragment.FirstShow();
+			RefreshData();
+		}else if(resultCode == android.app.Activity.RESULT_CANCELED){
+			finish();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -348,7 +276,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 				break;
 				//return SyncMenuClick(item);
 			case R.id.action_sync_clear:
-				if (tabViewFragment.m_inSyncProc)
+				if (m_inSyncProc)
 				{
 					return false;
 				}
@@ -370,7 +298,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 						ws.Toast("请先同步本地内容");
 					break;
 				}
-				tabViewFragment.getApp().getCurrentUser().SyncToken = 0;
+				mApp.getCurrentUser().SyncToken = 0;
 				try
 				{
 					access1.Visit(DefaultAccess.class).QueryEntity(ConfigItem.class, "update Configs set value = '0' where key='" + ConfigItem.Synch_Token + "'");
@@ -421,7 +349,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	{
 		if (keyCode == KeyEvent.KEYCODE_BACK)
 		{
-			if (tabViewFragment.m_inSyncProc)
+			if (m_inSyncProc)
 			{
 				Toast toast = Toast.makeText(this, "同步中...请稍后!" , Toast.LENGTH_SHORT); 
 				toast.show();
@@ -436,7 +364,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 			{
 				if (ConnectivityReceiver.hasConnection())
 				{
-					if (tabViewFragment.CheckLocal(true)) return false;
+					if (CheckLocal(true)) return false;
 				}
 				comfirmExit = true;
 				Toast toast = Toast.makeText(this, "再按一次退出程序!" , Toast.LENGTH_SHORT); 
@@ -485,152 +413,10 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	{
 		Intent intent = new Intent();
 		intent.setClass(getApplicationContext(), c);
-		//Uri uri = Uri.parse("http://onemillion.apphb.com/map.htm"); //urlΪ��Ҫ��ӵĵ�ַ
-		//Intent intent =new Intent(Intent.ACTION_VIEW, uri);
 		startActivityForResult(intent, 0);
 	}
 
 
-	/*private boolean SyncMenuClick(MenuItem item)
-	 {
-	 if (directory == null) return false;
-	 offLineMenuItem = item;
-	 if (item.getTitle().equals(getString(R.string.action_sync_off)))
-	 {
-	 File file = new File(directory);
-	 if (!file.isDirectory()) file.mkdir();			  
-
-	 if (!ConnectivityReceiver.hasConnection())
-	 {
-	 File dbFile =GetDBFile();
-	 if (dbFile.exists())
-	 {
-	 ToDoOffline(false);
-	 }
-	 else
-	 {
-	 new AlertDialog.Builder(MainActivity.this)      
-	 .setTitle(R.string.dialog_tip_title)   
-	 .setMessage(R.string.dialog_tip_no_network)    
-	 .setPositiveButton(R.string.ok_button_text, null)
-	 .show(); 
-	 }
-	 }
-	 else
-	 {
-	 //is wifi .getTypeName().equals("WIFI") 
-	 if (!ConnectivityReceiver.IsWifi())
-	 {
-	 new AlertDialog.Builder(MainActivity.this)      
-	 .setTitle(R.string.dialog_tip_title)    
-	 .setMessage(R.string.dialog_tip_not_wifi)    
-	 .setPositiveButton(R.string.ok_button_text, new DialogInterface.OnClickListener() {						
-	 @Override
-	 public void onClick(DialogInterface dialog, int which)
-	 {
-	 ToDoOffline(true);
-	 }
-	 })  
-	 .setNegativeButton(R.string.cancel_button_text, null) 
-	 .show(); 
-	 }
-	 else
-	 {
-	 ToDoOffline(true);
-	 }
-	 }
-	 }
-	 else
-	 {
-	 if (ConnectivityReceiver.hasConnection())   SetAsOffline(false);
-	 }
-	 return false;
-	 }*/
-
-	/*private void ToDoOffline(boolean downLoad)
-	 {
-
-	 if (downLoad)
-	 {
-	 //query current date if exists
-	 File dbFile =GetDBFile();
-	 if (dbFile.exists())
-	 {
-	 Calendar queryDay = Calendar.getInstance();
-	 if (queryDay.get(Calendar.HOUR) < 21)
-	 {
-	 queryDay.add(Calendar.DATE, -1);
-	 }
-	 SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
-	 String strDate = sdf.format(queryDay.getTime());
-	 String sql ="select count(0) from DayWorks where WorkDay='" + strDate  + "'";
-	 EntityDBHelper<DayWorks> helper =new EntityDBHelper<DayWorks>(new DBHelper(this), DayWorks.class);
-	 int count =0;
-	 try
-	 {
-	 count = helper.QueryCount(sql);
-	 }
-	 catch (SQLiteException e)
-	 {
-	 e.printStackTrace();
-	 MainActivity.ShowError(this, e);
-	 }
-	 if (count > 0)
-	 {
-	 Toast toast = Toast.makeText(this, "已有数据，直接离线显示!" , Toast.LENGTH_SHORT); 
-	 toast.show();
-	 SetAsOffline(true);
-	 return;
-	 }
-	 }
-
-	 Log.i("tip", "downloading remote db");
-	 new Thread(){
-	 @Override
-	 public void run()
-	 {	
-	 Utility.DownFile("http://onemillion.apphb.com/DownloadDB.ashx", directory, "TenMillion.db", tabViewFragment.GetMessageHandler());
-	 }			 
-	 }.start();
-	 LoadingDialog.Show(tabViewFragment.getActivity());
-
-	 }
-	 else
-	 {
-	 SetAsOffline(true); 
-	 }
-	 }
-
-
-	 //����Ϊ����ģʽ
-	 public static void SetAsOffline(boolean off)
-	 {
-	 if (directory == null) return;
-	 Utility.UseLocal = off;		
-	 if (tabViewFragment != null)
-	 {
-	 String tipMsg =tabViewFragment. getString(R.string.action_sync_set_success);
-
-	 if (off)
-	 { 
-	 offLineMenuItem.setTitle(R.string.action_sync_on);
-	 tipMsg += tabViewFragment. getString(R.string.action_sync_off);				
-
-	 }
-	 else
-	 {
-	 Log.i("tip", "use local db");
-	 offLineMenuItem.setTitle(R.string.action_sync_off);
-	 tipMsg += tabViewFragment. getString(R.string.action_sync_on);
-	 }
-
-	 Toast toast = Toast.makeText(tabViewFragment.getActivity() , tipMsg , Toast.LENGTH_SHORT); 
-	 toast.show();
-	 tabViewFragment.FirstShow();
-	 }
-
-	 }
-	 */
 	public static void ShowError(Context context, Exception ex)
 	{	
 		Toast toast = Toast.makeText(context , ex.getMessage(), Toast.LENGTH_SHORT); 
@@ -658,43 +444,29 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 
 	public static void SyncFinish(boolean hasData, boolean hasError)
 	{		
-		if (tabViewFragment.getActivity() == null || tabViewFragment.getActivity().getApplicationContext() == null || tabViewFragment.getActivity().isFinishing()) return;
-		//StartSyncTimer(false);
+		
 		if (hasData)
 		{
-			tabViewFragment.FirstShow();
+			RefreshData();
+			//tabViewFragment.FirstShow();
 		}
-		if (!TabViewFragment.isCheckedApkVersion && ConnectivityReceiver.hasConnection())
+		if (!isCheckedApkVersion && ConnectivityReceiver.hasConnection())
 		{
 			//检测新版本
 			String version = Utility.getVersionName(tabViewFragment.getActivity());
 			tabViewFragment.ws.visitServices("APKHaveNewVersion", new String[]{ "version"}, new String[]{version}, Utility.Sync_Query_APK_Version, false);
 
 		}
+		if(hasError) Log.d("sync","error");
+		else Log.d("sync","finish,has data "+hasData);
 	}
 
-	static void StartSyncTimer(boolean now)
-	{
-		if (tabViewFragment != null)
+	void StartSyncTimer(boolean now)
+	{	 
+		if (ConnectivityReceiver.hasConnection())
 		{
-//			int seconds = 0;
-//			if (now) seconds = 100;
-//			else
-//			{
-//				if (ConnectivityReceiver.IsWifi())
-//				{
-//					seconds = 300000;
-//				}
-//				else seconds = 900000;
-//			}
-			//runnable.run();
-			if (ConnectivityReceiver.hasConnection())
-			{
-	    		tabViewFragment.Sync();
-	    	}
-			//tabViewFragment.GetMessageHandler().post(runnable);
-			//tabViewFragment.GetMessageHandler().postDelayed(runnable, seconds);
-		}
+    		Sync();
+    	}
 	}
 
 	/**
@@ -766,4 +538,263 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 		super.onContextMenuClosed(menu);
 		if(tabViewFragment!=null) tabViewFragment.onContextMenuClosed(menu);
 	}  
+	
+	
+	String strUnSyncKeys = null;
+	public static boolean m_inSyncProc = false;
+	static boolean m_SyncHasData = false;
+	
+	
+	 public void Sync(){
+		 if(m_inSyncProc) return;
+		 Log.d("sync","start");
+		 m_inSyncProc =true;
+		 m_SyncHasData = false;
+		 CheckLocal(true);	
+	    }
+	 
+	 public boolean CheckLocal(boolean server){
+		//检查本地
+    	 LinkedList<UnSyncRecords> lst = m_Access.Visit(DefaultAccess.class).QueryEntityList(UnSyncRecords.class, "select * from UnSyncRecords limit 20");
+    	boolean hasLocal = lst.size() > 0;
+    	 if(lst!=null && hasLocal){
+    		strUnSyncKeys ="";
+    		String strContents="[";
+    		for(UnSyncRecords unSyn : lst){
+    			strContents+= unSyn.Sql+",";
+    			strUnSyncKeys += unSyn.ID +  ",";
+    		}
+    		strUnSyncKeys=strUnSyncKeys.substring(0,strUnSyncKeys.length() - 1);
+    		strContents = strContents.substring(0, strContents.length() -1);
+    		strContents+="]";
+    		ws.visitServices("SyncTeminalContent",new String[]{"token","time","machine","contents"} ,
+    				new String[]{String.valueOf(mApp.getCurrentUser().SyncToken), lst.get(0).SyncTime,"colys-phone",strContents},
+    				Utility.Sync_Content_To_Server);
+    		LoadingDialog.UpdateMessage("正在与服务器同步。。。");
+    	}else{
+    		if(strUnSyncKeys !=null){
+    			strUnSyncKeys = null;
+    			m_SyncHasData = true;
+    			ws.Toast("同步本地数据到服务器成功");
+    			m_SyncHasData = true;
+    		}
+    		if(server) CheckServer();
+    	}
+    	m_Access.Close(true); 
+    	return hasLocal;
+	 }
+	 
+	 private void CheckServer(){
+		 m_inSyncProc =true;
+		 //检查服务器,获取服务器上的最大token
+		 ws.visitServices("GetToken", null,null, Utility.Sync_Query_Token,false );
+		
+	    	
+	 }
+	    
+	    
+    private void CheckServerContent(int serverToken){
+    	if(serverToken ==0){
+    		m_inSyncProc = false; 
+    		MainActivity.SyncFinish(m_SyncHasData,false);
+    		return; 
+    	}
+    	mApp.getCurrentUser().SyncToken  = serverToken;
+		ConfigItem configItem_Sync=null;
+		try
+		{
+		 configItem_Sync = m_Access.Visit(DefaultAccess.class).QueryEntity(ConfigItem.class, "select * from Configs where key='" + ConfigItem.Synch_Token + "'");
+		}
+		catch (Exception e)
+		{
+			ws.Toast(e.getMessage());
+			return;
+		}
+		m_Access.Close(true);
+		long Synch_Token = 0;
+		if(configItem_Sync.Value!=null) Synch_Token = Integer.valueOf(configItem_Sync.Value);
+		 if(Synch_Token < mApp.getCurrentUser().SyncToken ){
+			if(Synch_Token==0 || (serverToken -Synch_Token  ) > 100){
+				mApp.getCurrentUser().SyncToken  = mApp.getLoginSyncToken();
+				
+				ws.visitServices("downloaddb", "m",m, Utility.DOWN_COMPLETE);
+				LoadingDialog.UpdateMessage("正在下载这"+m+"个月的数据。。。");
+				/* LoadingDialog.Show(getActivity());
+				 //直接下载
+				 Log.i("tip", "downloading remote db");
+					new Thread(){
+						@Override
+						public void run()
+						{	
+							Utility.DownFile("http://millions.sinaapp.com/downloadDB.php?m=2", DBHelper.database_directory, "TenMillion.sql",handler  );
+						}			 
+					}.start();*/
+					
+					 
+			 }else{
+				 //sync
+				 ws.visitServices("GetSyncContent","startToken",String.valueOf(Synch_Token), Utility.Sync_Server_Content );
+				 LoadingDialog.UpdateMessage("正在同步数据。。。");
+			 }
+		 }else{
+			 m_inSyncProc = false;
+			 MainActivity.SyncFinish(m_SyncHasData,false);
+		 }
+	}
+
+  
+	public void onHandleErrorMessage(Message msg){
+		switch(msg.what){	
+			case Utility.Sync_Query_Token:
+			case Utility.Sync_Content_To_Server:
+				m_inSyncProc = false;
+				MainActivity.SyncFinish(m_SyncHasData,true);
+				break;
+			
+			case Utility.Sync_Server_Content:
+				ws.Toast("同步数据失败，将不能查看最新的内容！");
+				m_inSyncProc = false;
+				MainActivity.SyncFinish(m_SyncHasData,true);
+				break;
+			case Utility.DOWN_COMPLETE:
+				//"下载"文件出错
+				m_inSyncProc = false;
+				break;
+			}
+		
+	}
+	
+	BasicAccess m_Access ;
+	private boolean ExecServerContents(String json,boolean updateConfigs){
+       m_Access.OpenTransConnect();
+       try {		    
+		    LinkedList<SynContent> lst = SynContent.ListFromJson(json);	
+			m_Access.ExecSynContents(lst);
+		    if(updateConfigs) m_Access.Visit(DefaultAccess.class).ExecuteNonQuery("update configs set value ='"+ mApp.getCurrentUser().SyncToken +"' where key='"+ ConfigItem.Synch_Token +"'");
+		    m_Access.Close(true);
+	   	} catch (Exception e) {				 
+	   		m_Access.Close(false);
+			ws.Toast("Exec Server Contents error : "+e.getMessage());
+			return false;
+		}
+       return true;
+	}
+	
+	public static boolean isCheckedApkVersion = false;
+	
+	Handler handler = ws.CreateHandle(new android.os.Handler.Callback(){
+		
+		@SuppressLint("HandlerLeak")
+		@Override
+		public boolean handleMessage(Message msg)
+		{	
+			switch(msg.what){
+			case Utility.Sync_Query_Token:
+				int token ;
+				if(ws.queryResult==null || ws.queryResult.isEmpty()) token =0;
+				else token = Utility.parseInt(ws.queryResult);
+				CheckServerContent(token);
+				break;
+			case Utility.Sync_Server_Content:
+				if(ExecServerContents(ws.queryResult,true)){
+					MainActivity.SyncFinish(true,false);
+					m_SyncHasData =true;
+				}else m_SyncHasData =false;
+			    m_inSyncProc = false;
+				break;
+			case Utility.Sync_Content_To_Server:
+				LoadingDialog.Close();
+				int splitIndex = ws.queryResult.indexOf("[");			 
+				String sycContents = null ;
+				try {
+					//有需要客户端去同步的内容
+					if(splitIndex > 0) {
+						mApp.getCurrentUser().SyncToken = Utility.parseInt((ws.queryResult.substring(0,splitIndex)));
+						sycContents= ws.queryResult.substring(splitIndex);			
+						if(!ExecServerContents(sycContents,false)){
+							ContentValues values=new ContentValues();
+							values.put("SyncTime", Utility.GetNowString("yyyy-MM-dd HH:mm:ss"));
+							values.put("ValueJson", sycContents);
+							m_Access.Visit(DefaultAccess.class).ExecuteInsert("ExecServerError", values);
+						}
+					}else 
+						mApp.getCurrentUser().SyncToken = Utility.parseInt(ws.queryResult);
+					//update config and delete unsync
+					m_Access.Visit(DefaultAccess.class).ExecuteNonQuery("delete from UnSyncRecords where ID in ("+strUnSyncKeys+")");
+					m_Access.Visit(DefaultAccess.class).ExecuteNonQuery("update Configs set value='"+ mApp.getCurrentUser().SyncToken +"' where key ='"+ ConfigItem.Synch_Token +"'");
+				} catch (Exception e) {
+					ws.Toast(e.getMessage());
+					ws.Toast("内容已经同步，但是清空unsync表和记录configs表失败!");
+					 return true;
+				}
+				m_Access.Close(true);
+				CheckLocal(true);	
+				break;			
+			case Utility.DOWN_START:
+				LoadingDialog.UpdateMessage("正在下载近"+m+"个月的数据，请稍候。。。");
+				break;
+			case Utility.DOWN_POSITION:
+				LoadingDialog.UpdateMessage(Utility.GetPercent(msg.arg1,msg.arg2));
+				break;		
+			case Utility.DOWN_COMPLETE:				
+				m_SyncHasData = true;
+				try {				
+			         String[] sqlArr = ws.queryResult.split(";");
+			         m_Access.Close(true);
+			         m_Access.OpenTransConnect();
+			         String[] tableArray = new String[]{"AskForLeave","DayWorkHouse","DayWorkDetail","House","Member","MonthPlan","PeopleComing","PeopleWorking","ShenGouRecords","Tasks","TrainItems","TrainPlan","TrainRecords","TrainReport"};
+			         for(String tableName : tableArray){
+			        	 m_Access.Visit(DefaultAccess.class).ExecuteNonQuery("delete from "+ tableName);
+			         }
+			         for(String sql : sqlArr){
+			        	 m_Access.Visit(DefaultAccess.class).ExecuteNonQuery(sql);
+			         }
+					Utility.LogConfigs(m_Access,mApp);					
+					m_Access.Close(true);
+				} catch (Exception e) {
+					ws.Toast("update sql error or log Config error "+ e.getMessage());
+					LoadingDialog.Close();
+					return true;
+				}
+				m_inSyncProc = false;
+				MainActivity.SyncFinish(m_SyncHasData,false);
+				LoadingDialog.Close();
+				break;
+			case Utility.Down_ERROR:
+				LoadingDialog.Close();
+				ws.Toast("下载失败: "+ msg.obj.toString());
+				//delete file 
+				Log.i("info", "download error delete file");
+				File file = new File(mApp.GetDataBasePath());
+				if(file.exists()){
+					file.delete();
+				}
+				m_inSyncProc = false;
+				finish();
+				break;
+			case Utility.Sync_Query_APK_Version:
+				if(ws.queryResult ==null|| ws.queryResult.isEmpty()|| ws.queryResult.equals("null")) return true;
+				isCheckedApkVersion = true;
+				new AlertDialog.Builder(MainActivity.this)
+				.setTitle("发现新版本")
+				.setMessage("是否马上下载?")
+				.setIcon(android.R.drawable.ic_dialog_info)
+				.setPositiveButton("下载",new DialogInterface.OnClickListener() {					
+					@Override
+					public void onClick(DialogInterface dialog, int which)
+					{	
+						Log.i("ApkDownLoad", ws.queryResult);
+						Uri uri = Uri.parse(ws.queryResult);
+						Intent intent =new Intent(Intent.ACTION_VIEW, uri);
+						startActivity(intent);
+					}
+				} ) 
+				.setNegativeButton(R.string.cancel_button_text, null)
+				.show();	
+				
+				break;
+			}
+			return true;
+		}
+	});
 }

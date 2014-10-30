@@ -8,10 +8,18 @@ import android.os.*;
 import android.view.*;
 import android.view.ContextMenu.*;
 import android.widget.*;
+
 import com.colys.tenmillion.Entity.*; 
+
 import java.util.*; 
+@SuppressLint("ValidFragment")
 public class MonthPeopleComingFragment extends TabViewFragment
-{
+{ 
+
+	public MonthPeopleComingFragment(WSView ws, Handler h) {
+		super(ws, h);
+	}
+
 	int year,month;
 	PeopleComing selectedPeopleComing;	 
 	TextView txtQueryMonth;

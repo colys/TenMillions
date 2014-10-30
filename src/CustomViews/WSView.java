@@ -116,7 +116,7 @@ public class WSView
 	public android.os.Handler.Callback WsErrorCallback;
  
 	@SuppressLint("HandlerLeak")
-	protected Handler CreateHandle(android.os.Handler.Callback callback)
+	public Handler CreateHandle(android.os.Handler.Callback callback)
 	{ 
 		this.callback = callback;		
 		return handler;

@@ -246,7 +246,8 @@ public class LoginActivity extends WSActivity
 	{
 		if (keyCode == KeyEvent.KEYCODE_BACK)
 		{
-			System.exit(0);
+			setResult(RESULT_CANCELED);
+			finish();
 		}
 		return super.onKeyDown(keyCode, event);
 	}

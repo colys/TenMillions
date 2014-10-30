@@ -49,7 +49,7 @@ Calendar calToday;
 		}         
 
 		String monthOneDay,monthMaxDay ;
-		if(month < 9){
+		if(month < 10){
 			monthOneDay= year+"-0"+month+"-00";
 			monthMaxDay= year+"-0"+month+"-32";
 		}
