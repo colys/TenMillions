@@ -7,6 +7,7 @@ import com.colys.tenmillion.Entity.DayWorkHouse;
 import com.colys.tenmillion.Entity.House;
 import com.colys.tenmillion.Entity.Member;
 import com.colys.tenmillion.Entity.PeopleComing;
+import com.colys.tenmillion.Entity.PeopleWorking;
 import com.colys.tenmillion.Entity.Task;
 
 import android.content.ClipData;
@@ -38,6 +39,7 @@ import DataAccess.DayWorkDetailAccess;
 import DataAccess.DayWorkHouseAccess;
 import DataAccess.HouseAccess;
 import DataAccess.PeopleComingAccess;
+import DataAccess.PeopleWorkingAccess;
 
 public class EditDayWorkActivity extends WSActivity{
 	
@@ -54,7 +56,7 @@ public class EditDayWorkActivity extends WSActivity{
 	private String queryDateStr,queryHouse;
 	PopMemberDayWorkActivity memberWorkDialog;
 	private LinearLayout workingListLayout;
-	final int OpenEditPeopleWorking = 5;
+	final int OpenEditPeopleWorking = 5,ChoosePeopleComing =6;
 	private ImageButton delView;
 	boolean hasChange = false;
 	private MemberViewAdapter memberAdapter;
@@ -85,8 +87,18 @@ public class EditDayWorkActivity extends WSActivity{
 				}
 			}
 		});
-		
-		
+		TextView tvAddComing = (TextView) findViewById(R.id.edit_daywork_people_working_add_coming);
+		tvAddComing.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent= new Intent();
+				intent.setClass(EditDayWorkActivity.this, ChoosePeopleComingActivity.class);
+				intent.putExtra("workdate", queryDateStr);				
+				intent.putExtra("house", selectDayWorkHouse.HouseID);
+				startActivityForResult(intent, ChoosePeopleComing);
+			}
+		});		
 		txtQuickText = (EditText) findViewById(R.id.edit_daywork_quick_text);
 		txtMember = (ListView) findViewById(R.id.edit_daywork_quick_add_member);	
 		txtMember.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -444,7 +456,55 @@ public class EditDayWorkActivity extends WSActivity{
 				selectDayWorkHouse.PeopleComingList = this.m_Access.Visit(PeopleComingAccess.class).GetWorking(selectDayWorkHouse.HouseID, queryDateStr,getApp().getCurrentGroupID());
 				LoadPeopleComingInfo();
 				m_Access.Close(true);
-			} 
+			} else if(requestCode == ChoosePeopleComing){ 
+				String comingid = data.getExtras().get("comingid").toString();				
+				for(PeopleComing pc : selectDayWorkHouse.PeopleComingList){
+					if(pc.ID.equals(comingid)){
+						ws.Toast("已经存在!");
+						return;
+					}
+				}
+				try {
+					PeopleComing pComing = m_Access.Visit(PeopleComingAccess.class).Get(comingid);
+					 if(pComing.Status ==0){
+						 pComing.HouseID = selectDayWorkHouse.HouseID;
+						 pComing.Status = 1;
+						 pComing.ArriveDate = queryDateStr;						 
+						 
+							m_Access.Visit(PeopleComingAccess.class).Update(pComing);
+							PeopleWorking pw = new PeopleWorking();
+							pw.ComingID = pComing.ID;
+							pw.DayCount = 1;
+							pw.HouseID = pComing.HouseID;
+							m_Access.Visit(PeopleWorkingAccess.class).Add(pw);
+							//if(pComing.Workings ==null) pComing.Workings = new LinkedList<PeopleWorking>();
+							//pComing.Workings.add(pw);							
+						
+					 }else{
+						 //修改房子
+						 pComing = null;
+						 for(DayWorkHouse dwh : houseWorkList){
+							 for( PeopleComing pc :  dwh.PeopleComingList){
+								 if(pc.ID.equals(comingid)){
+									 pComing = pc;
+									 dwh.PeopleComingList.remove(pc);
+									 m_Access.Visit(PeopleWorkingAccess.class).UpdateHouseByDate(pc.ID, queryDateStr, selectDayWorkHouse.HouseID);
+									 break;
+								 }
+							 }
+						 }
+						 if(pComing==null){ 
+							 ws.Toast("error:can't find coming in loaded list");
+							 return;
+						 }
+					}
+					 selectDayWorkHouse.PeopleComingList.add(pComing);
+					 LoadPeopleComingInfo();
+					 
+				} catch (Exception e) {
+					ws.Toast(e.getMessage());
+				}
+			}
 		}
 	}
 	

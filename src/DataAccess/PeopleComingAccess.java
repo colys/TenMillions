@@ -14,12 +14,22 @@ import com.colys.tenmillion.Entity.PeopleComing;
 import com.colys.tenmillion.Entity.PeopleWorking;
 import com.colys.tenmillion.Entity.ShenGouRecords;
 import com.colys.tenmillion.Entity.Task;
+import com.colys.tenmillion.Entity.TrainPlan;
 
 public class PeopleComingAccess extends BasicAccess{
 	private   PeopleComingAccess(Context content){
 		super(content);
 	}
 
+	//查询目前正在看工作和将要走工作的
+public 	LinkedList<PeopleComing> GetOnlineOrWillComingList(int groupID,String workDate){
+	String sql = "select Member.Name MemberName, PeopleComing.*,PeopleWorking.DayCount,PeopleWorking.Result as DayResult "+
+            " from PeopleComing "+
+            " left join PeopleWorking on PeopleWorking.ComingID = PeopleComing.ID and PeopleWorking.DayCount =(select max(DayCount) from PeopleWorking where PeopleWorking.ComingID = PeopleComing.ID ) "+
+            " join Member on Member.ID = PeopleComing.MemberID "+
+		" where Member.groupid=" + groupID + " and  ( PeopleComing.status in (0,1) or (PeopleComing.Status =2 and PeopleComing.leaveDate = '"+workDate+"')) ";
+	return super.QueryEntityList(PeopleComing.class, sql);
+}
 
 public LinkedList<PeopleComing> GetMonthComingList(int year, int month, String memberFilter, String fixWorkDate, int groupID)
 {
@@ -160,6 +170,9 @@ public int UpdateComing(PeopleComing coming,int groupid) throws Exception
 	   }
       
     return 1;
+}
+public PeopleComing Get(String id) throws Exception{
+	return this.QueryEntity(PeopleComing.class, "select PeopleComing.*,Member.Name MemberName from PeopleComing Join Member on Member.ID =PeopleComing.MemberID  where PeopleComing.ID ='"+id+"'");
 }
 
 

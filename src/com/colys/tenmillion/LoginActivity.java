@@ -45,34 +45,8 @@ public class LoginActivity extends WSActivity
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
-		dbDirectory = String.format("/data/data/%s/databases",this.getApplicationInfo().packageName);
-		File dirfile = new File(dbDirectory);
-		if(!dirfile.exists()){
-			dirfile.mkdir();
-		}
-		dbPath =dbDirectory +"/TenMillion.db";
-		
-		File file = new File(dbPath);
-		if(!file.exists()){
-			copyAssetsToFilesystem("TenMillion.db",dbPath);
-		}
-		MyApplication mApp = (MyApplication) getApplication();
-		mApp.SetDBPath(dbDirectory,"TenMillion.db");		
+		super.onCreate(savedInstanceState);	
 		mAccess =new BasicAccess(this);
-		String dbVal;
-		try {
-			dbVal = mAccess.Visit(DefaultAccess.class).ExecuteScalar("select Value from Configs where key='database_version'");
-		} catch (Exception e) {
-			dbVal ="2.0";
-		}
-		
-		if(!dbVal .equals("2.1")){
-			mAccess.Close(true);
-			copyAssetsToFilesystem("TenMillion.db",dbPath);
-		}		
-		
-		super.onCreate(savedInstanceState);		
 		ConfigItem configItem_group=null;
 		btnLogin = (Button) findViewById(R.id.login_enter_button);
 		try
@@ -298,9 +272,9 @@ public class LoginActivity extends WSActivity
 		 MyApplication mApp = (MyApplication) getApplication();
 		Utility.UseLocal = true;
 		mApp.setCurrentGroupID(groupID);
-		Intent intent = new Intent();
-		intent.setClass(getApplicationContext(), MainActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//		Intent intent = new Intent();
+//		intent.setClass(getApplicationContext(), MainActivity.class);
+//		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		user.Password = this.strPassword;
 		mApp.setCurrentUser (user);		
 		mApp.setLoginSyncToken (user.SyncToken);
@@ -317,41 +291,12 @@ public class LoginActivity extends WSActivity
 					return;
 				}
 			}
-		startActivity(intent);
+		//startActivity(intent);
+		 setResult(RESULT_OK);
 		finish();
 	}
 	
 	
-	  private boolean copyAssetsToFilesystem(String assetsSrc, String des){  
-	       // Log.i(tag, "Copy "+assetsSrc+" to "+des);  
-	        InputStream istream = null;  
-	        OutputStream ostream = null;  
-	        try{  
-	            AssetManager am = this.getAssets();  
-	            istream = am.open(assetsSrc);  
-	            ostream = new FileOutputStream(des);  
-	            byte[] buffer = new byte[1024];  
-	            int length;  
-	            while ((length = istream.read(buffer))>0){  
-	                ostream.write(buffer, 0, length);  
-	            }  
-	            istream.close();  
-	            ostream.close();  
-	        }  
-	        catch(Exception e){  
-	            e.printStackTrace();  
-	            try{  
-	                if(istream!=null)  
-	                    istream.close();  
-	                if(ostream!=null)  
-	                    ostream.close();  
-	            }  
-	            catch(Exception ee){  
-	                ee.printStackTrace();  
-	            }  
-	            return false;  
-	        }  
-	        return true;  
-	    }  
+	 
 	
 }

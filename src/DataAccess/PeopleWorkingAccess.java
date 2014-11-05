@@ -22,6 +22,17 @@ public void Add(PeopleWorking m_peopleworking) throws Exception{
     values.put("HouseID",m_peopleworking.HouseID);
     ExecuteInsert("PeopleWorking",values);
 }
+
+public void UpdateHouseByDate(String comingId, String date,String houseID) throws Exception{
+	String sql ="select PeopleWorking.* from PeopleWorking "
+			+ "join PeopleComing on  PeopleComing.ID = PeopleWorking.ComingID "
+			+ "where PeopleComing.ID ='"+ comingId +"' and DayCount = (julianday(datetime('"+ date +"'))-julianday(datetime(ArriveDate))+1)  ";
+	String id = ExecuteScalar(sql); 
+	ContentValues values=new ContentValues();
+	values.put("HouseID",houseID);
+	ExecuteUpdate("PeopleWorking",values,"ID='"+id+"'");
+	
+}
 public void Update(PeopleWorking m_peopleworking) throws Exception{
 	 PeopleWorking oldVal = this.QueryEntity(PeopleWorking.class, "select * from PeopleWorking where ID ='"+m_peopleworking.ID+"'");
 	 ContentValues values=new ContentValues();

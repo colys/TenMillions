@@ -46,6 +46,8 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	public static TabViewFragment tabViewFragment;
 
 	static ConnectivityReceiver connectivityReceiver ;
+	
+	public static final int Login_Request_code = 100;
 
 	boolean canUseLocal = true;
 
@@ -61,12 +63,37 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);		
+		String dbDirectory = String.format("/data/data/%s/databases",this.getApplicationInfo().packageName);
+		File dirfile = new File(dbDirectory);
+		if(!dirfile.exists()){
+			dirfile.mkdir();
+		}
+		String dbPath = dbDirectory +"/TenMillion.db";
+		
+		File file = new File(dbPath);
+		if(!file.exists()){
+			copyAssetsToFilesystem("TenMillion.db",dbPath);
+		}
+		mApp = (MyApplication) getApplication();
+		mApp.SetDBPath(dbDirectory,"TenMillion.db");	
+		m_Access = new BasicAccess(getApplicationContext());
+		String dbVal;
+		try {
+			dbVal = m_Access.Visit(DefaultAccess.class).ExecuteScalar("select Value from Configs where key='database_version'");
+		} catch (Exception e) {
+			dbVal ="2.0";
+		}
+		
+		if(!dbVal .equals("2.1")){
+			m_Access.Close(true);
+			copyAssetsToFilesystem("TenMillion.db",dbPath);
+		}		
 		
 		dayWorkFragment = new DayWorkFragment(ws,handler);
 		classifyMemberActivity = new ClassifyMemberFragment(ws,handler);
 		monthPeopleComingFragment =new MonthPeopleComingFragment(ws,handler);
-		m_Access = new BasicAccess(getApplicationContext());
-		mApp = (MyApplication) getApplication();
+		
+		
 
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_main);		
@@ -89,15 +116,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 						openOptionsMenu();
 					}
 				});	
-			String sdcard = Utility.GetSDCardPath();
-			if (sdcard == null)
-			{
-				directory = null;
-			}
-			else
-			{
-				directory = sdcard + "/.tenMillion/";
-			}
+			 
 
 			mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 			mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -184,10 +203,9 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	public void onResume()
 	{
 		super.onResume();		
+		mApp = (MyApplication) getApplication();
 		if(mApp.getCurrentUser() == null || mApp.getCurrentUser().ID ==0){
-			GotoActivity(LoginActivity.class);
-		}else{
-			StartSyncTimer(true);
+			GotoActivity(LoginActivity.class,Login_Request_code);
 		}
 		if (connectivityReceiver != null) connectivityReceiver.bind();
 		
@@ -205,17 +223,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	}
 	boolean isNoNetworkShow=false;
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		if (resultCode == android.app.Activity.RESULT_OK)
-		{
-			RefreshData();
-		}else if(resultCode == android.app.Activity.RESULT_CANCELED){
-			finish();
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+	
 	PopupMenu popup ;
 
 	public void InitMenu()
@@ -416,7 +424,12 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 		startActivityForResult(intent, 0);
 	}
 
-
+	private void GotoActivity(Class<?> c,int code)
+	{
+		Intent intent = new Intent();
+		intent.setClass(getApplicationContext(), c);
+		startActivityForResult(intent, code);
+	}
 	public static void ShowError(Context context, Exception ex)
 	{	
 		Toast toast = Toast.makeText(context , ex.getMessage(), Toast.LENGTH_SHORT); 
@@ -681,6 +694,52 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	}
 	
 	public static boolean isCheckedApkVersion = false;
+	
+	 private boolean copyAssetsToFilesystem(String assetsSrc, String des){  
+	       // Log.i(tag, "Copy "+assetsSrc+" to "+des);  
+	        InputStream istream = null;  
+	        OutputStream ostream = null;  
+	        try{  
+	            AssetManager am = this.getAssets();  
+	            istream = am.open(assetsSrc);  
+	            ostream = new FileOutputStream(des);  
+	            byte[] buffer = new byte[1024];  
+	            int length;  
+	            while ((length = istream.read(buffer))>0){  
+	                ostream.write(buffer, 0, length);  
+	            }  
+	            istream.close();  
+	            ostream.close();  
+	        }  
+	        catch(Exception e){  
+	            e.printStackTrace();  
+	            try{  
+	                if(istream!=null)  
+	                    istream.close();  
+	                if(ostream!=null)  
+	                    ostream.close();  
+	            }  
+	            catch(Exception ee){  
+	                ee.printStackTrace();  
+	            }  
+	            return false;  
+	        }  
+	        return true;  
+	    }  
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if(requestCode == Login_Request_code){
+			if(resultCode == android.app.Activity.RESULT_OK){
+				//登录成功,同步数据
+				StartSyncTimer(true);		
+			}else finish();				
+		}else if (resultCode == android.app.Activity.RESULT_OK){
+			RefreshData();			 
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	
 	Handler handler = ws.CreateHandle(new android.os.Handler.Callback(){
 		

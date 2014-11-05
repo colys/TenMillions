@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.colys.tenmillion"
     android:versionCode="1"
-    android:versionName="3.6" >
+    android:versionName="3.7" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -67,6 +67,8 @@
             android:label="@string/app_title" 
              android:windowSoftInputMode="adjustUnspecified|stateHidden" 
             android:configChanges="orientation|screenSize|keyboardHidden">            
+        </activity>
+         <activity android:name="com.colys.tenmillion.ChoosePeopleComingActivity" android:label="@string/app_title" android:configChanges="orientation|screenSize|keyboardHidden">            
         </activity>
 		
 		

@@ -190,7 +190,7 @@ public class DayWorkFragment extends TabViewFragment
 	public void FirstShow()
 	{
 		super.FirstShow();
-		Log.i("in action",String.valueOf(inAction));
+		//Log.i("in action",String.valueOf(inAction));
 		if(inAction > -1) 	return;
 		try {
 			queryDateStr =m_Access.Visit(DayWorkDetailAccess.class).GetLastDate(getCurrentGroupId());
