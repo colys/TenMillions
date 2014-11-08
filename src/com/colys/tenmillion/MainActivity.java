@@ -63,19 +63,11 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);		
-		String dbDirectory = String.format("/data/data/%s/databases",this.getApplicationInfo().packageName);
-		File dirfile = new File(dbDirectory);
-		if(!dirfile.exists()){
-			dirfile.mkdir();
-		}
-		String dbPath = dbDirectory +"/TenMillion.db";
-		
-		File file = new File(dbPath);
-		if(!file.exists()){
-			copyAssetsToFilesystem("TenMillion.db",dbPath);
-		}
 		mApp = (MyApplication) getApplication();
-		mApp.SetDBPath(dbDirectory,"TenMillion.db");	
+		File file = new File(mApp.GetDataBasePath());
+		if(!file.exists()){
+			copyAssetsToFilesystem("TenMillion.db",mApp.GetDataBasePath());
+		}
 		m_Access = new BasicAccess(getApplicationContext());
 		String dbVal;
 		try {
@@ -86,7 +78,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 		
 		if(!dbVal .equals("2.1")){
 			m_Access.Close(true);
-			copyAssetsToFilesystem("TenMillion.db",dbPath);
+			copyAssetsToFilesystem("TenMillion.db",mApp.GetDataBasePath());
 		}		
 		
 		dayWorkFragment = new DayWorkFragment(ws,handler);

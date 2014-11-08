@@ -27,10 +27,22 @@ public void UpdateHouseByDate(String comingId, String date,String houseID) throw
 	String sql ="select PeopleWorking.* from PeopleWorking "
 			+ "join PeopleComing on  PeopleComing.ID = PeopleWorking.ComingID "
 			+ "where PeopleComing.ID ='"+ comingId +"' and DayCount = (julianday(datetime('"+ date +"'))-julianday(datetime(ArriveDate))+1)  ";
-	String id = ExecuteScalar(sql); 
+	PeopleWorking pw = QueryEntity(PeopleWorking.class, sql);
 	ContentValues values=new ContentValues();
 	values.put("HouseID",houseID);
-	ExecuteUpdate("PeopleWorking",values,"ID='"+id+"'");
+	int result = ExecuteUpdate("PeopleWorking",values,"ID='"+pw.ID+"'");
+	 if(result == 0){
+		 sql ="select max(DayCount) from PeopleWorking where ComingID='"+comingId +"'";
+		 String strDayCount = ExecuteScalar(sql);
+		 int dayCount = 1;
+		 if(strDayCount!=null) dayCount = Integer.parseInt(strDayCount)+1;
+		 //insert peoplecoming work
+		pw = new PeopleWorking();
+		pw.ComingID = comingId;
+		pw.DayCount = dayCount;
+		pw.HouseID = houseID;
+		Add(pw);
+	 }
 	
 }
 public void Update(PeopleWorking m_peopleworking) throws Exception{
