@@ -66,8 +66,8 @@ public class MyApplication extends Application {
 		}
 		//String dbPath = dbDirectory +"/TenMillion.db";		
 		MyApplication mApp = (MyApplication) getApplicationContext();
-		mApp.SetDBPath(dbDirectory,"TenMillion.db");	
-        //get login info
+		mApp.SetDBPath(dbDirectory,"TenMillion.db");
+        /*get login info
 		String sql="select value from configs where key='"+ ConfigItem.Last_Account_Json +"'";
 		BasicAccess access = new BasicAccess(getApplicationContext());
 		try {
@@ -80,7 +80,7 @@ public class MyApplication extends Application {
 		} catch (Exception e) {
 			Toast toast = Toast.makeText(this.getApplicationContext(), "初始化Application失败，"+ e.getMessage(), Toast.LENGTH_LONG); 
 			toast.show();
-		}
+		}*/
     }  
 	
 	@Override

@@ -6,7 +6,9 @@ import com.colys.tenmillion.R;
 import android.app.Activity;
 import android.os.Bundle; 
 import android.os.Message;
-import android.widget.TextView; 
+import android.widget.TextView;
+import android.content.*;
+import com.colys.tenmillion.*; 
 
 public class WSActivity extends Activity {
 	
@@ -26,7 +28,13 @@ public class WSActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		ws.setActivity(this);
+		if(getApp().getCurrentUser()==null){
+			Intent intent = new Intent();
+			intent.setClass(getApplicationContext(), LoginActivity.class);
+			startActivityForResult(intent, 0);
+			ws.setActivity(this);
+		}
+		
 		try {
 			this.setContentView(getLayout());
 		} catch (Exception e) {
