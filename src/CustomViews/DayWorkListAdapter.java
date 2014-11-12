@@ -157,11 +157,12 @@ public static String FormatPeopleWorking(PeopleComing pc )
 public static String FormatHouseMemberWork(DayWorkHouse DayWorkHouse)
 {
 
-	String workStr ="";
+	String workStr =null;
 	for (DayWorkDetail daywork : DayWorkHouse.Works)
 	{
 		String strItem = FormatMemberWork(daywork);
-        workStr += strItem +"&nbsp;&nbsp;";
+		if(workStr==null) workStr=strItem;
+        else workStr +=  "&nbsp;&nbsp;"+strItem;
 	}
 	
 	return workStr ;

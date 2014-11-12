@@ -28,7 +28,7 @@ public class WSActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		if(getApp().getCurrentUser()==null){
+		if(getApp().getCurrentUser()==null &&!( this instanceof LoginActivity)){
 			Intent intent = new Intent();
 			intent.setClass(getApplicationContext(), LoginActivity.class);
 			startActivityForResult(intent, 0);
