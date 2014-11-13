@@ -15,6 +15,7 @@ import java.util.*;
 @SuppressLint("ValidFragment")
 public class MonthPeopleComingFragment extends TabViewFragment
 { 
+	public MonthPeopleComingFragment(){}
 
 	public MonthPeopleComingFragment(WSView ws, Handler h) {
 		super(ws, h);

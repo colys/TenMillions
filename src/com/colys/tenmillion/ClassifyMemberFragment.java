@@ -16,7 +16,7 @@ import java.util.*;
 @SuppressLint("ValidFragment")
 public class ClassifyMemberFragment extends TabViewFragment {
 
-	 
+	 public ClassifyMemberFragment(){}
 
 	public ClassifyMemberFragment(WSView ws, Handler h) {
 		super(ws, h); 

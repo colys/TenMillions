@@ -20,6 +20,7 @@ import java.util.*;
 @SuppressLint("ValidFragment")
 public class DayWorkFragment extends TabViewFragment
 { 	
+	public DayWorkFragment(){}
 	public DayWorkFragment(WSView ws,Handler handler) {
 		super(ws, handler); 
 	}
