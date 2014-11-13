@@ -32,9 +32,10 @@ public class WSActivity extends Activity {
 			Intent intent = new Intent();
 			intent.setClass(getApplicationContext(), LoginActivity.class);
 			startActivityForResult(intent, 0);
-			ws.setActivity(this);
+			return;
 		}
 		
+		ws.setActivity(this);
 		try {
 			this.setContentView(getLayout());
 		} catch (Exception e) {

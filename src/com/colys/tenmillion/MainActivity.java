@@ -35,9 +35,9 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 
 	ViewPager mViewPager;
 
-	Fragment dayWorkFragment ;
+	DayWorkFragment dayWorkFragment ;
 
-	Fragment classifyMemberActivity;
+	ClassifyMemberFragment classifyMemberActivity;
 
 	MonthPeopleComingFragment monthPeopleComingFragment;
 
@@ -62,9 +62,10 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		dayWorkFragment = new DayWorkFragment(ws,handler);
-		classifyMemberActivity = new ClassifyMemberFragment(ws,handler);
-		monthPeopleComingFragment =new MonthPeopleComingFragment(ws,handler);
+		dayWorkFragment = new DayWorkFragment();
+		classifyMemberActivity = new ClassifyMemberFragment();
+		monthPeopleComingFragment =new MonthPeopleComingFragment();
+		
 		super.onCreate(savedInstanceState);		
 		mApp = (MyApplication) getApplication();
 		File file = new File(mApp.GetDataBasePath());
@@ -191,6 +192,9 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	public void onResume()
 	{
 		super.onResume();		
+		dayWorkFragment.Init(ws,handler);
+		classifyMemberActivity.Init(ws,handler);
+		monthPeopleComingFragment.Init(ws,handler);
 		mApp = (MyApplication) getApplication();
 		if(mApp.getCurrentUser() == null || mApp.getCurrentUser().ID ==0){
 			GotoActivity(LoginActivity.class,Login_Request_code);

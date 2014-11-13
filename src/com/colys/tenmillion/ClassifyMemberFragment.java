@@ -18,9 +18,6 @@ public class ClassifyMemberFragment extends TabViewFragment {
 
 	 public ClassifyMemberFragment(){}
 
-	public ClassifyMemberFragment(WSView ws, Handler h) {
-		super(ws, h); 
-	}
 
 	private ListView listview;
 	LinkedList<Member> memberList;

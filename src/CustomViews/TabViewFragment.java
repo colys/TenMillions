@@ -26,7 +26,7 @@ public abstract class TabViewFragment extends Fragment {
 		
 	}
 	
-	public TabViewFragment(WSView ws,Handler h){
+	public void Init(WSView ws,Handler h){
 		this.ws=ws;
 		handler =h;
 		

@@ -37,9 +37,7 @@ public class LoginActivity extends WSActivity
 	private EditText txtOldPwd;
 	private EditText txtNewPwd;
 	private EditText txtAccount_2;
-	private String dbDirectory;
 	int groupID;
-	private String dbPath;
 	User configUser;
 	int configGroupID;
 	
@@ -269,9 +267,10 @@ public class LoginActivity extends WSActivity
 	
 	private void GotoMain(boolean updateConfig) throws Exception{
 		//log last login to db
-		 MyApplication mApp = (MyApplication) getApplication();
+		MyApplication mApp = (MyApplication) getApplication();
 		Utility.UseLocal = true;
 		mApp.setCurrentGroupID(groupID);
+		Log.d("login",String.valueOf( groupID));
 //		Intent intent = new Intent();
 //		intent.setClass(getApplicationContext(), MainActivity.class);
 //		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

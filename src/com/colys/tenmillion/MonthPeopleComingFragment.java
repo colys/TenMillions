@@ -17,9 +17,6 @@ public class MonthPeopleComingFragment extends TabViewFragment
 { 
 	public MonthPeopleComingFragment(){}
 
-	public MonthPeopleComingFragment(WSView ws, Handler h) {
-		super(ws, h);
-	}
 
 	int year,month;
 	PeopleComing selectedPeopleComing;	 
