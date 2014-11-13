@@ -62,6 +62,9 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		dayWorkFragment = new DayWorkFragment(ws,handler);
+		classifyMemberActivity = new ClassifyMemberFragment(ws,handler);
+		monthPeopleComingFragment =new MonthPeopleComingFragment(ws,handler);
 		super.onCreate(savedInstanceState);		
 		mApp = (MyApplication) getApplication();
 		File file = new File(mApp.GetDataBasePath());
@@ -79,14 +82,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 		if(!dbVal .equals("2.1")){
 			m_Access.Close(true);
 			copyAssetsToFilesystem("TenMillion.db",mApp.GetDataBasePath());
-		}		
-		
-		dayWorkFragment = new DayWorkFragment(ws,handler);
-		classifyMemberActivity = new ClassifyMemberFragment(ws,handler);
-		monthPeopleComingFragment =new MonthPeopleComingFragment(ws,handler);
-		
-		
-
+		}
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_main);		
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);//titlebar为自己标题栏的布局
