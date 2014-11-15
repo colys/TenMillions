@@ -65,7 +65,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 		dayWorkFragment = new DayWorkFragment();
 		classifyMemberActivity = new ClassifyMemberFragment();
 		monthPeopleComingFragment =new MonthPeopleComingFragment();
-		
+		Init();
 		super.onCreate(savedInstanceState);		
 		mApp = (MyApplication) getApplication();
 		File file = new File(mApp.GetDataBasePath());
@@ -186,16 +186,21 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 
 		}
 	}
+	
+	public void Init(){
+		if(ws==null)ws=new WSView();
+		dayWorkFragment.Init(ws,handler);
+		classifyMemberActivity.Init(ws,handler);
+		monthPeopleComingFragment.Init(ws,handler);
+		mApp = (MyApplication) getApplication();
+	}
 	 
 
 	@Override
 	public void onResume()
 	{
 		super.onResume();		
-		dayWorkFragment.Init(ws,handler);
-		classifyMemberActivity.Init(ws,handler);
-		monthPeopleComingFragment.Init(ws,handler);
-		mApp = (MyApplication) getApplication();
+		Init();
 		if(mApp.getCurrentUser() == null || mApp.getCurrentUser().ID ==0){
 			GotoActivity(LoginActivity.class,Login_Request_code);
 		}
