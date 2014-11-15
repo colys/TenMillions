@@ -26,12 +26,12 @@ public class WSView
 	MyApplication mApp;
 
 
-	public WSView()
+	public WSView(Activity activity)
 	{
-
+		setActivity(activity);
 	}
 
-	public void setActivity(Activity activity)
+	private void setActivity(Activity activity)
 	{
 		this.activity = activity;
 		mApp=((MyApplication) activity.getApplication());

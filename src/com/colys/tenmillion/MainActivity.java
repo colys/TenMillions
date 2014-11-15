@@ -189,9 +189,8 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	
 	public void Init(){
 		if(ws==null){
-			ws=new WSView();
+			ws=new WSView(this);
 			handler = ws.CreateHandle(handlerCallback);
-			ws.setActivity(this);
 			ws.WsErrorCallback = new android.os.Handler.Callback(){
 				@Override
 				public boolean handleMessage(Message msg) {

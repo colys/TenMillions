@@ -23,19 +23,19 @@ public class WSActivity extends Activity {
 		return getApp().getCurrentGroupID();
 	}
 	
-	protected WSView ws =new WSView();
+	protected WSView ws ;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		ws=new WSView(this);
 		if(getApp().getCurrentUser()==null &&!( this instanceof LoginActivity)){
 			Intent intent = new Intent();
 			intent.setClass(getApplicationContext(), LoginActivity.class);
 			startActivityForResult(intent, 0);
 			return;
 		}
-		
-		ws.setActivity(this);
+		 
 		try {
 			this.setContentView(getLayout());
 		} catch (Exception e) {
