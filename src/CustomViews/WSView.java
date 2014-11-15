@@ -91,7 +91,7 @@ public class WSView
 		//������Ϣ���ͳ����ʱ���ִ��Handler������
 		public void handleMessage(Message msg)
 		{
-			Log.i("message", Utility.GetNowString("HH:mm:ss")+ "call message handle with what:"+ msg.what );
+			//Log.i("message", Utility.GetNowString("HH:mm:ss")+ "call message handle with what:"+ msg.what );
 			if (msg.obj != null)
 			{
 				queryResult = msg.obj.toString();

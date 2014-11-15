@@ -67,20 +67,6 @@ public class MyApplication extends Application {
 		//String dbPath = dbDirectory +"/TenMillion.db";		
 		MyApplication mApp = (MyApplication) getApplicationContext();
 		mApp.SetDBPath(dbDirectory,"TenMillion.db");
-        /*get login info
-		String sql="select value from configs where key='"+ ConfigItem.Last_Account_Json +"'";
-		BasicAccess access = new BasicAccess(getApplicationContext());
-		try {
-			String json = access.Visit(DefaultAccess.class).ExecuteScalar(sql);
-			mCurrentUser = User.FromJson(json);
-			mLoginSyncToken = mCurrentUser.SyncToken;
-			sql="select value from configs where key='"+ ConfigItem.Last_Account_group +"'";
-			String strGroupid = access.Visit(DefaultAccess.class).ExecuteScalar(sql);
-			mCurrentGroupID = Integer.parseInt(strGroupid);
-		} catch (Exception e) {
-			Toast toast = Toast.makeText(this.getApplicationContext(), "初始化Application失败，"+ e.getMessage(), Toast.LENGTH_LONG); 
-			toast.show();
-		}*/
     }  
 	
 	@Override

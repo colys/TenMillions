@@ -55,7 +55,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 
 	boolean startDelayed = false;
 	
-	WSView ws = new WSView();
+	WSView ws ;
 	
 	MyApplication mApp ;
 
@@ -188,10 +188,22 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	}
 	
 	public void Init(){
-		if(ws==null)ws=new WSView();
-		dayWorkFragment.Init(ws,handler);
-		classifyMemberActivity.Init(ws,handler);
-		monthPeopleComingFragment.Init(ws,handler);
+		if(ws==null){
+			ws=new WSView();
+			handler = ws.CreateHandle(handlerCallback);
+			ws.setActivity(this);
+			ws.WsErrorCallback = new android.os.Handler.Callback(){
+				@Override
+				public boolean handleMessage(Message msg) {
+					 onHandleErrorMessage(msg);
+					return false;
+				}
+			
+			};
+		}
+		dayWorkFragment.Init(ws);
+		classifyMemberActivity.Init(ws);
+		monthPeopleComingFragment.Init(ws);
 		mApp = (MyApplication) getApplication();
 	}
 	 
@@ -738,7 +750,9 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
-	Handler handler = ws.CreateHandle(new android.os.Handler.Callback(){
+	Handler handler;
+	
+	android.os.Handler.Callback handlerCallback = new android.os.Handler.Callback(){
 		
 		@SuppressLint("HandlerLeak")
 		@Override
@@ -852,5 +866,5 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 			}
 			return true;
 		}
-	});
+	};
 }

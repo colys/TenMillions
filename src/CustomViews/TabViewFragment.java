@@ -26,10 +26,9 @@ public abstract class TabViewFragment extends Fragment {
 		
 	}
 	
-	public void Init(WSView ws,Handler h){
+	public void Init(WSView ws){
 		this.ws=ws;
-		handler =h;
-		
+		handler =ws.handler;		
 	}
 	
 	public final View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState){	
@@ -41,16 +40,7 @@ public abstract class TabViewFragment extends Fragment {
 			isFirstShow = true;	
 			rootView = inflater.inflate(layout,	container, false);
 			if(rootView != null){				
-				m_Access =new BasicAccess(rootView.getContext());
-				ws.setActivity((Activity) rootView.getContext());
-				ws.WsErrorCallback = new android.os.Handler.Callback(){
-					@Override
-					public boolean handleMessage(Message msg) {
-						((MainActivity)getActivity()). onHandleErrorMessage(msg);
-						return false;
-					}
-				
-				};
+				m_Access =new BasicAccess(rootView.getContext());				
 				isError = false;
 				onCreateView(rootView);
 				return rootView;
