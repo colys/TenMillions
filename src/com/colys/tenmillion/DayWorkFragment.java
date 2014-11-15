@@ -48,8 +48,7 @@ public class DayWorkFragment extends TabViewFragment
 	{
 		return R.layout.activity_day_works;
 	}
-	
-	BasicAccess m_Access;
+	 
  
 	@SuppressLint("SimpleDateFormat")
 	@Override

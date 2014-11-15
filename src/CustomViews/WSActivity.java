@@ -29,11 +29,12 @@ public class WSActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		ws=new WSView(this);
-		if(getApp().getCurrentUser()==null &&!( this instanceof LoginActivity)){
-			Intent intent = new Intent();
-			intent.setClass(getApplicationContext(), LoginActivity.class);
-			startActivityForResult(intent, 0);
-			return;
+		if(getApp().getCurrentUser()==null &&!( this instanceof LoginActivity)){ 
+			finish();
+			setResult(-1);
+//			Intent intent = new Intent();
+//			intent.setClass(getApplicationContext(), LoginActivity.class);
+//			startActivityForResult(intent, 0);
 		}
 		 
 		try {

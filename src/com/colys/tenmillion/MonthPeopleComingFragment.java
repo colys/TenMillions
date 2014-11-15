@@ -24,7 +24,7 @@ public class MonthPeopleComingFragment extends TabViewFragment
 	ListView listview ;
 	Button btnPrev,btnNext;
 	LinkedList< PeopleComing> peopleComingList;
-	BasicAccess access ;
+	
 
 	@Override
 	public int getLayout()
@@ -96,9 +96,7 @@ public class MonthPeopleComingFragment extends TabViewFragment
 
 	@Override
 	public void FirstShow()
-	{
-		if(access==null)
-			access =new BasicAccess(this.getActivity());
+	{ 
 		super.FirstShow();
 		runQueryPlan();
 	}
@@ -157,9 +155,9 @@ public class MonthPeopleComingFragment extends TabViewFragment
 	{
 		if (Utility.UseLocal)
 		{
-			peopleComingList =  access.Visit(PeopleComingAccess.class).GetMonthComingList(year, month, null, null,  getCurrentGroupId());
+			peopleComingList =  m_Access.Visit(PeopleComingAccess.class).GetMonthComingList(year, month, null, null,  getCurrentGroupId());
 			BindListView(); 
-			access.Close(true);
+			m_Access.Close(true);
 		}
 		else
 		{
@@ -197,14 +195,14 @@ public class MonthPeopleComingFragment extends TabViewFragment
 		else if(groupId==22){
 			try
 			{
-				access.Visit(PeopleComingAccess.class).Delete(selectedPeopleComing.ID);
+				m_Access.Visit(PeopleComingAccess.class).Delete(selectedPeopleComing.ID);
 				runQueryPlan();
 			}
 			catch (Exception e)
 			{
 				ws.Toast(e.getMessage());
 			}
-			access.Close(true);
+			m_Access.Close(true);
 		}
 		return super.onContextItemSelected(item);
 	}

@@ -22,12 +22,15 @@ public abstract class TabViewFragment extends Fragment {
 	
 	public WSView ws;
 	
+	protected BasicAccess m_Access ;
+	
 	public TabViewFragment(){
 		
 	}
 	
-	public void Init(WSView ws){
+	public void Init(WSView ws,BasicAccess access){
 		this.ws=ws;
+		this.m_Access = access;
 		handler =ws.handler;		
 	}
 	
@@ -39,8 +42,7 @@ public abstract class TabViewFragment extends Fragment {
 		if(layout > -1) {
 			isFirstShow = true;	
 			rootView = inflater.inflate(layout,	container, false);
-			if(rootView != null){				
-				m_Access =new BasicAccess(rootView.getContext());				
+			if(rootView != null){								
 				isError = false;
 				onCreateView(rootView);
 				return rootView;
@@ -91,8 +93,7 @@ public abstract class TabViewFragment extends Fragment {
 	public void FirstShow(){
 		isFirstShow = false;
 	}
-	
-	BasicAccess m_Access ;
+	 
 	
 	public void onContextMenuClosed(Menu menu){
 		 

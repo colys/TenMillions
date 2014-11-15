@@ -58,21 +58,22 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	WSView ws ;
 	
 	MyApplication mApp ;
+	
+	BasicAccess m_Access;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		dayWorkFragment = new DayWorkFragment();
 		classifyMemberActivity = new ClassifyMemberFragment();
-		monthPeopleComingFragment =new MonthPeopleComingFragment();
-		Init();
-		super.onCreate(savedInstanceState);		
+		monthPeopleComingFragment =new MonthPeopleComingFragment();		
+		super.onCreate(savedInstanceState);				
 		mApp = (MyApplication) getApplication();
 		File file = new File(mApp.GetDataBasePath());
 		if(!file.exists()){
 			copyAssetsToFilesystem("TenMillion.db",mApp.GetDataBasePath());
 		}
-		m_Access = new BasicAccess(getApplicationContext());
+		Init();
 		String dbVal;
 		try {
 			dbVal = m_Access.Visit(DefaultAccess.class).ExecuteScalar("select Value from Configs where key='database_version'");
@@ -190,6 +191,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	public void Init(){
 		if(ws==null){
 			ws=new WSView(this);
+			m_Access = new BasicAccess(this);
 			handler = ws.CreateHandle(handlerCallback);
 			ws.WsErrorCallback = new android.os.Handler.Callback(){
 				@Override
@@ -200,9 +202,9 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 			
 			};
 		}
-		dayWorkFragment.Init(ws);
-		classifyMemberActivity.Init(ws);
-		monthPeopleComingFragment.Init(ws);
+		dayWorkFragment.Init(ws,m_Access );
+		classifyMemberActivity.Init(ws,m_Access);
+		monthPeopleComingFragment.Init(ws,m_Access);
 		mApp = (MyApplication) getApplication();
 	}
 	 
@@ -266,28 +268,27 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	        	break;
 
 			case R.id.action_sync:
-				//ExecServerError
-				BasicAccess access =new BasicAccess(this.getApplicationContext());
-				access.OpenTransConnect();
-				Cursor cur = access.Visit(DefaultAccess.class).Query("select ValueJson from ExecServerError");				
+				//ExecServerError 
+				m_Access.OpenTransConnect();
+				Cursor cur = m_Access.Visit(DefaultAccess.class).Query("select ValueJson from ExecServerError");				
 				try
 				{
 					while (cur.moveToNext())
 					{  
 						LinkedList<SynContent> lst = SynContent.ListFromJson(cur.getString(0));						
-						access.Visit(DefaultAccess.class).ExecSynContents(lst);					
+						m_Access.Visit(DefaultAccess.class).ExecSynContents(lst);					
 					}
 					cur.close();
-					access.Visit(DefaultAccess.class).ExecuteNonQuery("delete from ExecServerError");		
+					m_Access.Visit(DefaultAccess.class).ExecuteNonQuery("delete from ExecServerError");		
 				}
 				catch (Exception e)
 				{
 					tabViewFragment.ws.Toast(e.getMessage());
 					cur.close();
-					access.Close(false);
+					m_Access.Close(false);
 					break;
 				}				
-				access.Close(true);
+				m_Access.Close(true);
 				StartSyncTimer(true);
 				break;
 				//return SyncMenuClick(item);
@@ -296,11 +297,11 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 				{
 					return false;
 				}
-				BasicAccess access1 =new BasicAccess(this.getApplicationContext());
+				 
 				String cc;
 				try
 				{
-					cc = access1.Visit(DefaultAccess.class).ExecuteScalar("select count(0) from UnSyncRecords");
+					cc = m_Access.Visit(DefaultAccess.class).ExecuteScalar("select count(0) from UnSyncRecords");
 				}
 				catch (Exception e)
 				{
@@ -317,14 +318,14 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 				mApp.getCurrentUser().SyncToken = 0;
 				try
 				{
-					access1.Visit(DefaultAccess.class).QueryEntity(ConfigItem.class, "update Configs set value = '0' where key='" + ConfigItem.Synch_Token + "'");
+					m_Access.Visit(DefaultAccess.class).QueryEntity(ConfigItem.class, "update Configs set value = '0' where key='" + ConfigItem.Synch_Token + "'");
 				}
 				catch (Exception e)
 				{
 					tabViewFragment.ws.Toast(e.getMessage());
 					break;
 				}
-				access1.Close(true);
+				m_Access.Close(true);
 				StartSyncTimer(true);
 				/*File dbFile = new File(directory + "/TenMillion.db");
 				 if (dbFile.exists())
@@ -685,7 +686,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 		
 	}
 	
-	BasicAccess m_Access ;
+	 
 	private boolean ExecServerContents(String json,boolean updateConfigs){
        m_Access.OpenTransConnect();
        try {		    
@@ -747,6 +748,10 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 			RefreshData();			 
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode ==-1){
+			if(data.getExtras()!=null) data.getExtras().clear();
+		}
+		
 	}
 	
 	Handler handler;
