@@ -1,13 +1,12 @@
 package CustomViews; 
-import com.colys.tenmillion.MainActivity;
 import com.colys.tenmillion.MyApplication;
 import com.colys.tenmillion.R; 
 import DataAccess.BasicAccess;
-import android.app.Activity; 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler; 
-import android.os.Message;
 import android.support.v4.app.Fragment; 
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;

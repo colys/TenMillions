@@ -2,6 +2,7 @@ package com.colys.tenmillion;
 import CustomViews.*;
 import DataAccess.*;
 import android.annotation.*;
+import android.app.Activity;
 import android.content.*;
 import android.content.res.*; 
 import android.os.*;
@@ -32,10 +33,9 @@ public class MonthPeopleComingFragment extends TabViewFragment
 		return R.layout.activity_month_people_coming;
 	}
 
-	@Override
-	public void onCreateView(View rootView)
-	{	 
-
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		Activity rootView = getActivity();
 		Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH) + 1;
@@ -98,6 +98,7 @@ public class MonthPeopleComingFragment extends TabViewFragment
 	public void FirstShow()
 	{ 
 		super.FirstShow();
+		if(getActivity()==null) return;
 		runQueryPlan();
 	}
 

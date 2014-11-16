@@ -748,10 +748,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 			RefreshData();			 
 		}
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode ==-1){
-			if(data.getExtras()!=null) data.getExtras().clear();
-		}
-		
+	
 	}
 	
 	Handler handler;
