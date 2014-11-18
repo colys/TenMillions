@@ -121,6 +121,12 @@ public class WSView
 		this.callback = callback;		
 		return handler;
 	}
+	
+	public void ToastLong(String str)
+	{
+		Toast toast = Toast.makeText(activity, str, Toast.LENGTH_LONG); 
+		toast.show();
+	}
 
 
 	public void Toast(String str)

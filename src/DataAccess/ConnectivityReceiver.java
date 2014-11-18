@@ -141,6 +141,10 @@ public class ConnectivityReceiver  extends BroadcastReceiver {
 		 
 		   } 
 		   
+		   public Context getContext(){
+			   return context;
+		   }
+		   
 		 
 		      
 		 

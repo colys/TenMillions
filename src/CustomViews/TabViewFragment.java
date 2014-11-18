@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;  
+import android.widget.TextView;
+import android.os.*;
+import android.support.v4.app.*;  
 
 
 
@@ -20,6 +22,8 @@ public abstract class TabViewFragment extends Fragment {
 	public boolean isFirstShow = true;
 	
 	public WSView ws;
+	
+	protected Activity mActivity;
 	
 	protected BasicAccess m_Access ;
 	
@@ -33,6 +37,27 @@ public abstract class TabViewFragment extends Fragment {
 		handler =ws.handler;		
 	}
 	
+	public void onCreateView(View rootView) {
+
+	}
+
+	@Override
+	public void onStart()
+	{
+		//ws.Toast("on start " +this.getClass().getName());
+		super.onStart();
+		FirstShow();
+	}
+
+	@Override
+	public void onStop()
+	{
+		//ws.Toast("on stop " +this.getClass().getName());
+		super.onStop();
+	}
+	
+	
+	
 	public final View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState){	
 		super.onCreateView(inflater, container, savedInstanceState);
 		boolean isError = true;	
@@ -43,7 +68,14 @@ public abstract class TabViewFragment extends Fragment {
 			rootView = inflater.inflate(layout,	container, false);
 			if(rootView != null){								
 				isError = false;
+				((OnFragmentListener)mActivity).onFragmentCreated(this);
 				onCreateView(rootView);
+				//ws.Toast("oncreate view "+this.getClass().getName());
+				/*
+				
+			
+				FirstShow();
+				*/
 				return rootView;
 			}
 		} 
@@ -60,14 +92,12 @@ public abstract class TabViewFragment extends Fragment {
 	}
 	 @Override  
 	 public void onActivityCreated(Bundle savedInstanceState) {  
-	        super.onActivityCreated(savedInstanceState);  
-	        
+	 super.onActivityCreated(savedInstanceState);
+		// ws.Toast("onActivity create "+this.getClass().getName());
 	 }	
 
 	 
-	public void onCreateView(View rootView) {
-		
-	}
+	
 	 
 	MyApplication mMyApplication=null;
 	
@@ -92,9 +122,22 @@ public abstract class TabViewFragment extends Fragment {
 	public void FirstShow(){
 		isFirstShow = false;
 	}
-	 
+
+	@Override
+	public void onAttach(Activity activity)
+	{
+		super.onAttach(activity);
+		mActivity=activity;
 	
-	public void onContextMenuClosed(Menu menu){
-		 
-	 }
+	}
+	
+	
+	public interface OnFragmentListener{
+		public void onFragmentCreated (TabViewFragment f);
+		
+	    public void onFragmentStart(TabViewFragment f);
+	
+	}
+
+
 }

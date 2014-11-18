@@ -36,7 +36,7 @@ public class BasicAccess
 			mapp = (MyApplication) context.getApplicationContext();
 		 
 		m_dbhelper = new DBHelper(m_context,mapp.GetDataBasePath());
-
+		Close(true);
 	}
 
 	LinkedList<BasicAccess> accessList =new LinkedList<BasicAccess>();

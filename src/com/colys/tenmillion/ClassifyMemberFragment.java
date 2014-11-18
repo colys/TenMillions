@@ -35,15 +35,7 @@ public class ClassifyMemberFragment extends TabViewFragment {
 	@Override
 	public void FirstShow(){
 		super.FirstShow();
-		try{
 		QueryMemberTree();
-		Log.i("tip","query member is call, wait");
-		}
-		catch (SQLiteException e)
-		{
-			e.printStackTrace();
-			MainActivity.ShowError(this.getActivity(),e);
-		}
 	}
 	
 	EntityDBHelper<Member> helper;

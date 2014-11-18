@@ -67,8 +67,19 @@ public class MemberMapActivity extends WSActivity
 		String url ="file:///"+ MainActivity.directory+"Assets/MapView.htm";
 		url="file:///android_asset/MapView.htm";
 		webView.loadUrl(url);
-		
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if(requestCode==RESULT_OK) {
+			webView.reload();
+			setResult(RESULT_OK);
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	
 	
 	public class JavascriptAccess{
 		Activity activity;
@@ -94,8 +105,10 @@ public class MemberMapActivity extends WSActivity
 			bundle.putString("memberID", id); 
 			intent.putExtras(bundle);
 			intent.setClass(activity,EditMemberActivity.class);
-			activity.startActivity(intent);
+			activity.startActivityForResult(intent,0);
 		}
+		
+
 	}
 
 }

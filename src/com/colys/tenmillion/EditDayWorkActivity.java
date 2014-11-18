@@ -118,6 +118,7 @@ public class EditDayWorkActivity extends WSActivity {
 				for (DayWorkDetail i : selectDayWorkHouse.Works) {
 					if (i.MemberID.equals(m.ID)) {
 						ws.Toast("already exists!");
+						txtQuickText.setText("1");
 						return;
 					}
 				}
@@ -595,6 +596,7 @@ public class EditDayWorkActivity extends WSActivity {
 			}
 		}
 		selectDayWorkHouse.PeopleComingList.add(pComing);
+		m_Access.Close(true);
 		LoadPeopleComingInfo();
 	}
 

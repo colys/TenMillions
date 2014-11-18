@@ -185,15 +185,14 @@ public class DayWorkFragment extends TabViewFragment {
 	@Override
 	public void FirstShow() {
 		super.FirstShow();
-		if(getActivity()==null) return;
-		// Log.i("in action",String.valueOf(inAction));
 		if (inAction > -1)
 			return;
 		try {
 			queryDateStr = m_Access.Visit(DayWorkDetailAccess.class)
 					.GetLastDate(getCurrentGroupId());
 		} catch (Exception e1) {
-			ws.Toast(e1.getMessage());
+			ws.Toast("查询每日工作时间异常"+e1.getMessage());
+			queryDateStr=null;
 		}
 		if (queryDateStr == null || queryDateStr.isEmpty()) {
 			queryDateStr = Utility.GetNowString();
@@ -203,7 +202,12 @@ public class DayWorkFragment extends TabViewFragment {
 		RunQuery(0);
 
 	}
-
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode,resultCode,data);
+		inAction=-1;
+	}
+/*
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == android.app.Activity.RESULT_OK) {
@@ -228,7 +232,7 @@ public class DayWorkFragment extends TabViewFragment {
 			}
 			inAction = -1;
 		}
-	}
+	}*/
 
 	@SuppressLint("SimpleDateFormat")
 	private void RunQuery(int absDay) {
@@ -251,11 +255,10 @@ public class DayWorkFragment extends TabViewFragment {
 			QueryAskForLeave();
 			QueryTask();
 			RunQueryServices();
-
 			m_Access.Close(true);
 		} catch (Exception e) {
 			e.printStackTrace();
-			MainActivity.ShowError(this.getActivity(), e);
+			ws.ToastLong("查询"+queryDateStr+"的工作数据发生异常:"+e.getMessage());
 		}
 		btnPrev.setEnabled(true);
 		btnNext.setEnabled(true);

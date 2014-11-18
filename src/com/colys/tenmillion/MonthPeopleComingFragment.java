@@ -107,7 +107,7 @@ public class MonthPeopleComingFragment extends TabViewFragment
 	{		
 	    super.onConfigurationChanged(newConfig);
     }
-
+/*
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -119,7 +119,7 @@ public class MonthPeopleComingFragment extends TabViewFragment
 				runQueryPlan();
 			}			
 		}
-	}
+	}*/
 
 //	public void onHandleMessage(Message msg)
 //	{
