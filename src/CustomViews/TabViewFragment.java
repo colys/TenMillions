@@ -27,6 +27,7 @@ public abstract class TabViewFragment extends Fragment {
 	
 	protected BasicAccess m_Access ;
 	
+
 	public TabViewFragment(){
 		
 	}
@@ -46,6 +47,7 @@ public abstract class TabViewFragment extends Fragment {
 	{
 		//ws.Toast("on start " +this.getClass().getName());
 		super.onStart();
+		((OnFragmentListener)mActivity).onFragmentStart(this);
 		FirstShow();
 	}
 
@@ -138,6 +140,6 @@ public abstract class TabViewFragment extends Fragment {
 	    public void onFragmentStart(TabViewFragment f);
 	
 	}
-
-
+	
+	public void onContextMenuClosed(Menu menu) {}
 }

@@ -185,7 +185,7 @@ public class DayWorkFragment extends TabViewFragment {
 	@Override
 	public void FirstShow() {
 		super.FirstShow();
-		if (inAction > -1)
+		if (inAction > -1|| getApp().getCurrentUser()==null)
 			return;
 		try {
 			queryDateStr = m_Access.Visit(DayWorkDetailAccess.class)
@@ -433,14 +433,17 @@ public class DayWorkFragment extends TabViewFragment {
 		 * (!hdw.House.ID.equals(House.Empty_House_Guid ))
 		 * houseList.add(hdw.House); }
 		 */
-		for (int i = houseWorkList.size() - 1; i > -1; i--) {
-			DayWorkHouse hdw = houseWorkList.get(i);
-			// if (!hdw.HouseID.equals(House.Empty_House_Guid ))
-			// houseList.add(hdw.House);
-			if (hdw.Works != null && hdw.Works.size() > 0)
-				needInit = false;
-			else
-				houseWorkList.remove(i);
+		if(houseList.size() ==0 ) needInit = false;
+		else {
+			for (int i = houseWorkList.size() - 1; i > -1; i--) {
+				DayWorkHouse hdw = houseWorkList.get(i);
+				// if (!hdw.HouseID.equals(House.Empty_House_Guid ))
+				// houseList.add(hdw.House);
+				if (hdw.Works != null && hdw.Works.size() > 0)
+					needInit = false;
+				else
+					houseWorkList.remove(i);
+			}
 		}
 		if (needInit && getApp().getCurrentUser().InitDayWorks) {
 			new AlertDialog.Builder(getActivity())

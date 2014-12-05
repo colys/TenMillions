@@ -158,7 +158,7 @@ public class DayWorkDetailAccess extends BasicAccess
 				ContentValues values=new ContentValues();
 				values.put("ComingID", cur.getString(0));
 				values.put("dayCount", cur.getString(1));
-				values.put("WDHID", emptyDWH.ID); 
+				//values.put("WDHID", emptyDWH.ID); 
 				values.put("result", ""); 
 				values.put("ID", super.CreateGUID()); 
 				ExecuteInsert("PeopleWorking", values);

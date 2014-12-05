@@ -203,7 +203,6 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 		if (mApp.getCurrentUser() == null || mApp.getCurrentUser().ID == 0)
 		{
 			GotoActivity(LoginActivity.class, Login_Request_code);
-			return;
 		}
 		if (connectivityReceiver == null) InitConnectivity(this);
 		connectivityReceiver.bind();
@@ -366,7 +365,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 			{
 				if (ConnectivityReceiver.hasConnection())
 				{
-					if (CheckLocal(true)) return false;
+					if (CheckLocal(false)) return false;
 				}
 				comfirmExit = true;
 				Toast toast = Toast.makeText(this, "再按一次退出程序!" , Toast.LENGTH_SHORT); 
@@ -843,7 +842,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 					}
 					catch (Exception e)
 					{
-						ws.Toast("update sql error or log Config error " + e.getMessage());
+						ws.ToastLong("sync error \r\n " + e.getMessage());
 						LoadingDialog.Close();
 						return true;
 					}
@@ -916,6 +915,12 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 	{
 		f.Init(ws, m_Access);
 	}
-
+	@Override
+	public void onContextMenuClosed(Menu menu) {
+		if(pageArr[1]!=null){
+			((TabViewFragment)pageArr[1]).onContextMenuClosed(menu);
+		}
+		super.onContextMenuClosed(menu);
+	}
 
 }

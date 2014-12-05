@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import CustomViews.WSActivity;
 import DataAccess.BasicAccess;
@@ -32,6 +33,17 @@ public class ChoosePeopleComingActivity extends WSActivity  {
 		listView= (ListView) findViewById(R.id.choose_people_coming_listview);
 		strWorkDate = this.getIntent().getExtras().getString("workdate");
 		strHouseID = this.getIntent().getExtras().getString("house");
+		Button btnAddnew = (Button) findViewById(R.id.choose_people_coming_addnew);
+		btnAddnew.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View arg0) {
+				Intent intent = new Intent();
+				intent.setClass(ChoosePeopleComingActivity.this,
+						PeopleComingActivity.class);
+				startActivityForResult(intent, 0);
+			
+			}
+		});
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -63,4 +75,10 @@ public class ChoosePeopleComingActivity extends WSActivity  {
         ArrayAdapter<String> listItemAdapter =new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listItem );
         listView.setAdapter(listItemAdapter);
 	}
+	
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == android.app.Activity.RESULT_OK) {
+				LoadData();
+		}
+		}
 }

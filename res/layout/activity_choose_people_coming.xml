@@ -9,7 +9,13 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="请在列表中选择一个新人，点击即可！" />
+        android:text="在列表中选择一个新人，点击即可！" />
+     <Button
+        android:id="@+id/choose_people_coming_addnew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:text="我还没添加呢！" />
 
     <ListView
         android:id="@+id/choose_people_coming_listview"
